@@ -11,7 +11,7 @@ const Login = () => {
             <i className="bx bxs-user"></i>
           </div>
           <div className="inputbox">
-            <input type="password" placeholder="Password" required />
+            <input type="password" placeholder="Password" resquired />
             <i className="bx bxs-alt"></i>
           </div>
           <div className="rforgot">
@@ -27,7 +27,7 @@ const Login = () => {
 
           <div className="rlink">
             <p>
-              {" "}
+              
               Don't have an account?
               <Link to="/signup">Register</Link>
             </p>

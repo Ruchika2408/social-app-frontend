@@ -1,22 +1,25 @@
 import { Link } from "react-router-dom";
 import "./index.css";
+import SocialPost from "../SocialPost";
+import CamPaignImg from "../../images/campaign1.jpg";
+import Logo from "../../images/logo.jpg";
+import CamPaignImg2 from "../../images/campaign2.jpg";
+import CamPaignImg3 from "../../images/campaign3.jpg";
+import CamPaignImg4 from "../../images/campaign4.jpg";
 const Home = () => {
   return (
     <>
-      <div className="main">
-        <p> Lets take a step forward to change the world</p>
-      </div>
-      <div className="image">
-        <img src="pictures/logo.jpg" />
-      </div>
       <header>
         <nav>
           <ul className="menubar">
+          <div className="image">
+        <img src={Logo} />
+      </div>
             <li>
               <Link to="/">Home</Link>
             </li>
             <li>
-            <Link to="/contact">Contact Us</Link>
+              <Link to="/contact">Contact Us</Link>
             </li>
           </ul>
           <div className="button">
@@ -44,42 +47,72 @@ const Home = () => {
           family, school, and community resources and supports.
         </p>
       </div>
-      <div className="campaign">
-        <div className="cause2">
-          <img src="campaign1.jpg" alt="Campaign 1 Image" />
-          <h3>Campaign 1: Clean Water for All</h3>
-          <p>
-            Access to clean water is a basic human right. Help us provide clean
-            and safe water to communities in need.
-          </p>
-        </div>
+      <div className="topic1">
+        <SocialPost title="Environment Sustainability" description={"Greener tomorrow ? Need to RRR (Reduce, reuse, recycle) We can significantly improve our planet's health by implementing sustainable practices such as waste reduction, recycling, and energy conservation. Join us in our endeavour to safeguard the environment and ensure a sustainable future for generations to come. To read more about this cause"} img={CamPaignImg} />
+        <SocialPost
+          title={"Mental Health Awareness"}
+          description={
+            "“No one is alone Many people are hesitant to seek help for mental health concerns due to the stigma associated with them. Let's work together to break the stigma by raising awareness, offering support, and providing resources to people with mental health difficulties.To read more about this cause"
+          }
+          img={CamPaignImg2}
+        />
+        <SocialPost
+          title={"Mental Health Awareness"}
+          description={
+            "“No one is alone Many people are hesitant to seek help for mental health concerns due to the stigma associated with them. Let's work together to break the stigma by raising awareness, offering support, and providing resources to people with mental health difficulties.To read more about this cause"
+          }
+          img={CamPaignImg3}
+        />
 
-        <div className="cause2">
-          <img src="campaign2.jpg" alt="Campaign 2 Image" />
-          <h3>Campaign 2: Education for Every Child</h3>
-          <p>
-            Every child deserves access to quality education. Support our
-            mission to build schools and provide educational resources.
-          </p>
-        </div>
-
-        <div className="cause2">
+<SocialPost
+          title={"Mental Health Awareness"}
+          description={
+            "“No one is alone Many people are hesitant to seek help for mental health concerns due to the stigma associated with them. Let's work together to break the stigma by raising awareness, offering support, and providing resources to people with mental health difficulties.To read more about this cause"
+          }
+          img={CamPaignImg4}
+        />
+        {/* <div className="campaign">
           <img src="campaign3.jpg" alt="Campaign 3 Image" />
-          <h3>Campaign 3: End Hunger</h3>
+          <h3>Gender Equality</h3>
           <p>
-            Millions of people go to bed hungry every night. Join our efforts to
-            distribute food and end hunger worldwide.
+            “Equal voices, Equal choices.” Gender equality is a fundamental
+            human right, but women and girls around the world continue to
+            experience discrimination and inequality. By campaigning for equal
+            rights and opportunities for all genders, we can build a more just
+            and equitable society. To read more about this cause{" "}
+            <a href=" https://www.un.org/sustainabledevelopment/gender-equality/">
+              Click Here
+            </a>
           </p>
+          <button class="like">
+            <img src="pictures/like.jpg" />
+          </button>
+          <button class="comment">
+            <img src="pictures/comment.jpg" />
+          </button>
         </div>
 
-        <div className="cause2">
+        <div className="campaign">
           <img src="campaign4.jpg" alt="Campaign 4 Image" />
-          <h3>Campaign 4: Protect the Environment</h3>
+          <h3>Poverty mitigation</h3>
           <p>
-            Our planet needs us. Participate in our initiatives to reduce
-            pollution and promote sustainable living.
+            “Poverty: Handmade, We can break it.” Poverty impacts millions of
+            people around the world, denying them basic necessities such as
+            food, housing, and education. We can help those in need by raising
+            awareness and supporting poverty-relief efforts. Join us in our
+            efforts to eradicate poverty and build a better future for
+            everybody. To read more about this cause{" "}
+            <a href="https://www.un.org/en/global-issues/ending-poverty">
+              Click Here
+            </a>
           </p>
-        </div>
+          <button class="like">
+            <img src="pictures/like.jpg" />
+          </button>
+          <button class="comment">
+            <img src="pictures/comment.jpg" />
+          </button>
+        </div> */}
       </div>
       <footer>
         <div className="footer">
@@ -88,8 +121,13 @@ const Home = () => {
               <b>About Us:</b>
             </p>
             <p>
-              We are a group of 10 people working on this project. This projects
-              aims to provide the platform to raise awareness.
+              We are a group of 10 people working on this project. The company’s
+              vision is to raise awareness of social issues and give our users a
+              platform where they can advertise for small businesses. This web
+              application will allow users to create and participate in the
+              causes that are close to their hearts and also provide a platform
+              for small business owners to promote their businesses and get
+              leads.
             </p>
           </div>
           <div className="footer2">

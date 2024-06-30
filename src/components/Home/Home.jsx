@@ -13,7 +13,7 @@ const Home = () => {
         <nav>
           <ul className="menubar">
           <div className="image">
-        <img src={Logo} />
+        <img src={Logo} alt="logo" />
       </div>
             <li>
               <Link to="/">Home</Link>

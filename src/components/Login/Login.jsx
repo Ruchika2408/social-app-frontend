@@ -13,7 +13,6 @@ const Login = () => {
   const submitLogin = async (e) => {
     e.preventDefault();
     if (currentEmail && currentPassword) {
-      console.log(currentEmail,currentPassword)
       const loginResponse = await authenticate(currentEmail, currentPassword);
       if(loginResponse.code === "loggedIn" && user){
         navigate("/");

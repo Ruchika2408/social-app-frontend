@@ -35,7 +35,6 @@ export const UserProvider = ({ children }) => {
 
     const registerUser = useCallback(async(userData) => {
         const response = await signup(userData);
-          console.log(response);
         return response;
     },[])
 

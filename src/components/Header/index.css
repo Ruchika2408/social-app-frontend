@@ -1,0 +1,120 @@
+.image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    opacity: 0.8;
+}
+
+header {
+    background-color: #fefefe;
+    padding: 10px 20px;
+    color: black;
+    margin-top: 10px;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+}
+
+.menubar {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.menubar li {
+    margin-right: 20px;
+    text-align: center;
+}
+
+.menubar a {
+    text-decoration: none;
+    color: black;
+    font-size: 20px;
+    transition: color 0.3s;
+    display: flex;
+    align-items: center;
+}
+
+.menubar a:hover {
+    color: #0f70c1;
+}
+
+
+.button {
+    display: flex;
+}
+
+.button .buttons {
+    text-decoration: none;
+    color: white;
+    background-color: #0f70c1;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-left: 10px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.button .buttons:hover {
+    background-color: #482df7;
+    color: #77c1f3;
+}
+
+
+.heading {
+    color: white;
+    font-size: 40px;
+    padding: 20px;
+    text-align: center;
+    position: absolute;
+
+}
+
+.login {
+    padding: 20px;
+    color: white;
+    text-align: center;
+    font-size: 26px;
+}
+
+.signup {
+    padding: 20px;
+    color: white;
+    text-align: center;
+    font-size: 26px;
+}
+
+
+.floating-text {
+    font-size: 15px;
+    display: inline-block;
+    white-space: nowrap;
+    animation: floatText 16s linear infinite;
+}
+
+@keyframes floatText {
+    0% {
+        transform: translate(200%);
+    }
+
+    100% {
+        transform: translateX(-200%);
+    }
+}

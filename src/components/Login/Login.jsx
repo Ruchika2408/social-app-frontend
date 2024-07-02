@@ -1,8 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
-import "./login.css";
-
 import { useState } from "react";
+
 import { useUser } from "../../Providers/userProvider";
+
+//css
+import "./login.css";
 
 const Login = () => {
   const [currentEmail, setCurrentEmail] = useState("");
@@ -15,43 +17,45 @@ const Login = () => {
     e.preventDefault();
     if (currentEmail && currentPassword) {
       const loginResponse = await authenticate(currentEmail, currentPassword);
-      if(loginResponse.code === "loggedIn" && user){
+      console.log(loginResponse);
+      if (loginResponse.code === "loggedIn" && user) {
         navigate("/");
         setError("")
       }
-      if(loginResponse.code === "incorrectPassword" ) {
+      if (loginResponse.code === "incorrectPassword") {
         setError("Please provide valid password");
       }
-      if(loginResponse.code === "userNotFound" ) {
+      if (loginResponse.code === "userNotFound") {
         setError("User not Found.");
-      }else {
+      } else {
         setError("USer Already LoggedIn.")
       }
     }
   }
 
   const handleChange = (e) => {
-      const {id,value} = e.target;
-   
-     if(id === "email"){
+    const { id, value } = e.target;
+
+    if (id === "email") {
       setCurrentEmail(value);
-     }
-     if(id==="password"){
+    }
+    if (id === "password") {
       setCurrentPassword(value);
-     }
+    }
   }
 
   return (
-    <>
+    <div className="container">
+      <img className="video" src="https://i.pinimg.com/originals/55/01/60/5501609ee45d514d1f2c4a63502045e2.gif" alt="gif" />
       <div className="outbox">
         <form>
           <h1>Login</h1>
           <div className="inputbox">
-            <input id="email" type="email"  value={currentEmail} onChange={handleChange} />
+            <input id="email" type="email" value={currentEmail} onChange={handleChange} />
             <i className="bx bxs-user"></i>
           </div>
           <div className="inputbox">
-            <input id="password" type="password"  value={currentPassword} onChange={handleChange} />
+            <input id="password" type="password" value={currentPassword} onChange={handleChange} />
             <i className="bx bxs-alt"></i>
           </div>
           {error && <p>{error}</p>}
@@ -74,7 +78,8 @@ const Login = () => {
           </div>
         </form>
       </div>
-    </>
+    </div>
   );
 };
+
 export default Login;

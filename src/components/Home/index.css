@@ -3,120 +3,9 @@
   padding: 2px;
   background-color: rgb(177, 218, 244);
   color: white
-
-}
-.image {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  position: relative;
 }
 
-.image img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 5px;
-  opacity: 0.8;
-}
 
-header {
-  background-color: #fefefe;
-  padding: 10px 20px;
-  color: black;
-  margin-top: 10px;
-}
-
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px;
-  box-sizing: border-box;
-  width: 100%;
-  max-width: 100%;
-}
-
-.menubar {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  align-items: center;
-}
-
-.menubar li {
-  margin-right: 20px;
-  text-align: center;
-}
-
-.menubar a {
-  text-decoration: none;
-  color: black;
-  font-size: 20px;
-  transition: color 0.3s;
-  display: flex;
-  align-items: center;
-}
-
-.menubar a:hover {
-  color: #0f70c1;
-}
-
-.button {
-  display: flex;
-}
-
-.button .buttons {
-  text-decoration: none;
-  color: white;
-  background-color: #0f70c1;
-  padding: 10px 15px;
-  border-radius: 5px;
-  margin-left: 10px;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-.button .buttons:hover {
-  background-color: #482df7;
-  color: #77c1f3;
-}
-
-.heading {
-  color: white;
-  font-size: 40px;
-  padding: 20px;
-  text-align: center;
-  position: absolute;
-  
-}
-.login {
-  padding: 20px;
-  color: white;
-  text-align: center;
-  font-size: 26px;
-}
-.signup {
-  padding: 20px;
-  color: white;
-  text-align: center;
-  font-size: 26px;
-}
-.floating-text {
-  font-size: 15px;
-  display: inline-block;
-  white-space: nowrap;
-  animation: floatText 16s linear infinite;
-}
-@keyframes floatText {
-  0% {
-    transform: translate(200%);
-  }
-  100% {
-    transform: translateX(-200%);
-  }
-}
 
 .header2 {
   margin: 0;
@@ -125,6 +14,7 @@ nav {
   text-align: center;
   font-size: 24px;
 }
+
 .topic1 {
   display: flex;
   flex-wrap: wrap;
@@ -155,98 +45,73 @@ nav {
 }
 
 .topic1 button {
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-}
-.like{
-    width: 60px;
-    height: 60px;
-    border-radius: 15px;
-}
-.like img{
-    display: flex;
-    width: 60px;
-    height: 60px;
-    border-radius: 15px;
-
-}
-.like:hover{
-    background-color: skyblue;
-}
-.comment{
-    width: 60px;
-    height: 60px;
-    border-radius: 15px;
-}
-.comment:hover{
-    background-color: skyblue;
-}
-.comment img{
-    width: 60px;
-    height: 60px;
-    border-radius: 15px;
-
-}
-
-footer {
-  background-color: #0f70c1;
-  color: white;
-  padding: 20px 0;
-  text-align: center;
-  font-size: 18px;
-}
-
-.footer1 {
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
   display: flex;
-  justify-content: space-around;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  padding: 0 20px;
-  text-align: center;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
 }
 
-.footer2 {
-  margin: 20px;
+.like {
+  width: 60px;
+  height: 60px;
+  border-radius: 15px;
 }
 
-.footer2 h4 {
-  margin-bottom: 10px;
+.like img {
+  display: flex;
+  width: 60px;
+  height: 60px;
+  border-radius: 15px;
+
 }
 
-.footer3 {
-  background-color: white;
-  padding: 10px 0;
-  margin-top: 20px;
-  color: black;
+.like:hover {
+  background-color: skyblue;
 }
 
-.footer3 p {
-  margin: 0;
+.comment {
+  width: 60px;
+  height: 60px;
+  border-radius: 15px;
 }
 
-.buttonsWrapper{
-    display: flex;
-    gap: 8px;
-    align-items: center;
+.comment:hover {
+  background-color: skyblue;
 }
+
+.comment img {
+  width: 60px;
+  height: 60px;
+  border-radius: 15px;
+
+}
+
+.buttonsWrapper {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
 .campaignImg {
-    max-width: 100%;
-    max-height: 200px;}
+  max-width: 100%;
+  max-height: 200px;
+}
 
 .campaignImg2 {
-        max-width: 100%;
-        max-height: 200px;}
+  max-width: 100%;
+  max-height: 200px;
+}
 
 .campaignImg3 {
-            max-width: 100%;
-            max-height: 200px;}
+  max-width: 100%;
+  max-height: 200px;
+}
 
 .campaignImg4 {
-                max-width: 100%;
-                max-height: 200px;}
+  max-width: 100%;
+  max-height: 200px;
+}

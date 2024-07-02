@@ -1,34 +1,64 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./signup.css";
+import { useState } from "react";
+import { useUser } from "../../Providers/userProvider";
 
 const Signup = () => {
+  const [userData, setUser] = useState({ firstName: "", lastName: "", email: "", phoneNumber: "", password: "" });
+  const { registerUser } = useUser();
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setUser({ ...userData, [id]: value });
+  }
+
+  const submitUser = async (e) => {
+    e.preventDefault();
+    if (userData.firstName && userData.lastName && userData.email && userData.phoneNumber && userData.password) {
+      const response = await registerUser(userData);
+      if (response.code === "registered") {
+        navigate("/login")
+        setError("")
+        setUser({ firstName: "", lastName: "", email: "", phoneNumber: "", password: "" })
+      }
+      if(response.code === "existUser") {
+        setError("User Already Exist.")
+      }
+    }
+    else {
+      setError("Please provide Valid Data");
+    }
+  }
+
   return (
     <>
       <div className="outbox">
-        <form action="">
+        <form>
           <h1>Please fill the form to SignUp!!</h1>
           <div className="inputbox">
-            <input type="text" placeholder="Username" required />
+            <input type="text" id="firstName" placeholder="FirstName" value={userData.firstName} onChange={handleChange} />
             <i className="bx bxs-user"></i>
           </div>
           <div className="inputbox">
-            <input type="text" placeholder="Email" required />
+            <input type="text" id="lastName" placeholder="LastName" value={userData.lastName} onChange={handleChange} />
             <i className="bx bxs-user"></i>
           </div>
           <div className="inputbox">
-            <input type="password" placeholder="Password" required />
+            <input type="text" id="email" placeholder="Email" value={userData.email} onChange={handleChange} />
+            <i className="bx bxs-user"></i>
+          </div>
+          <div className="inputbox">
+            <input type="password" id="password" placeholder="Password" value={userData.password} onChange={handleChange} />
             <i className="bx bxs-alt"></i>
           </div>
           <div className="inputbox">
-            <input
-              type="Confirm password"
-              placeholder="Confirm Password"
-              required
-            />
+            <input type="text" id="phoneNumber" placeholder="Phone Number" value={userData.phoneNumber} onChange={handleChange} />
             <i className="bx bxs-alt"></i>
           </div>
-
-          <button type="Submit" className="btn">
+          {error && <p>{error}</p>}
+          <button onClick={submitUser} className="btn">
             SignIn
           </button>
 

@@ -13,8 +13,11 @@ const Home = () => {
     <>
       <header>
         <nav>
-            <img src={Logo} alt="img" width="48px" height="48px" />
+          <img src={Logo} alt="img" width="48px" height="48px" />
           <ul className="menubar">
+            <div className="image">
+              <img src={Logo} alt="logo" />
+            </div>
             <li>
               <Link to="/">Home</Link>
             </li>
@@ -32,16 +35,16 @@ const Home = () => {
           </div>
         </nav>
         <div className="image">
-          <img src={HeaderBg}  width="100%" />
+          <img src={HeaderBg} width="100%" />
           <div className="heading">
-        <h1> Social Awareness</h1>
-        <div className="floating-text">
-          <h2> Join us in making difference!</h2>
-        </div>
-      </div>
+            <h1> Social Awareness</h1>
+            <div className="floating-text">
+              <h2> Join us in making difference!</h2>
+            </div>
+          </div>
         </div>
       </header>
-     
+
       <div className="header2">
         <p>
           {" "}

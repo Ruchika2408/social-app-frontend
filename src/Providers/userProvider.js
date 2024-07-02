@@ -10,6 +10,7 @@ import login from "../services/login";
 import findUser from "../services/getUser";
 import signup from "../services/signup";
 import logout from "../services/logout";
+import forgetPassword from "../services/forgetPassword";
 
 const UserContext = createContext();
 
@@ -17,12 +18,17 @@ export const UserProvider = ({ children }) => {
     const [user, setUser] = useState({});
     const [isLoggedIn, setLoggedIn] = useState(false);
     
+    const fetchUser = useCallback(async(email) => {
+        const response = await findUser(email);
+        return response;
+    }, []);
+
     const authenticate = useCallback(async (email, password) => {
         const response = await login(email, password);
         if (response.code === "loggedIn") {
             localStorage.setItem("id", email);
              setLoggedIn(true);
-            const userData = await findUser(email);
+            const userData = await fetchUser(email);
             if (userData.code === "userExist") {
                 setUser(userData.user);
             }
@@ -36,7 +42,7 @@ export const UserProvider = ({ children }) => {
             setUser({})
         }
         return response;
-    },[])
+    },[fetchUser])
 
     const signout = useCallback(async(email) => {
         const response = await logout(email);
@@ -48,6 +54,11 @@ export const UserProvider = ({ children }) => {
         return response;
     }, [])
 
+    const forgetpassword = useCallback(async(email, newPassword) => {
+        const response = await forgetPassword(email, newPassword);
+        return response;
+    }, [])
+
     const registerUser = useCallback(async(userData) => {
         const response = await signup(userData);
         return response;
@@ -55,8 +66,8 @@ export const UserProvider = ({ children }) => {
 
     const setUserData = useCallback((userData) => setUser(userData), []);
 
-    const value = useMemo(() => ({ authenticate, signout, user, setUserData,  registerUser, isLoggedIn }), [
-        authenticate, user, setUserData, registerUser, isLoggedIn, signout
+    const value = useMemo(() => ({ authenticate, signout, user, setUserData,fetchUser, forgetpassword, registerUser, isLoggedIn }), [
+        authenticate, user, setUserData, registerUser, isLoggedIn, signout, fetchUser, forgetpassword
     ])
 
     return <UserContext.Provider value={value}>{children}</UserContext.Provider>

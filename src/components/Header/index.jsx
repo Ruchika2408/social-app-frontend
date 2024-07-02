@@ -7,11 +7,14 @@ import HeaderBg from "../../images/background.jpg";
 //css
 import "./index.css";
 
-const StyledHeader = ({ isLoggedIn, handleLogout }) => {
+const StyledHeader = ({ isLoggedIn, handleLogout, name }) => {
     return (
         <header>
             <nav>
+                <div className="user">
                 <img src={Logo} alt="img-logo" width="48px" height="48px" />
+                {isLoggedIn && name && <p>{name}</p>}
+                </div>
                 <ul className="menubar">
                     <li>
                         <Link to="/">Home</Link>

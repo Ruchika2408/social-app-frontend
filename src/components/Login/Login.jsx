@@ -51,11 +51,11 @@ const Login = () => {
         <form>
           <h1>Login</h1>
           <div className="inputbox">
-            <input id="email" type="email" value={currentEmail} onChange={handleChange} />
+            <input id="email" type="email" placeholder="Email Address" value={currentEmail} onChange={handleChange} />
             <i className="bx bxs-user"></i>
           </div>
           <div className="inputbox">
-            <input id="password" type="password" value={currentPassword} onChange={handleChange} />
+            <input id="password" type="password"placeholder="Password" value={currentPassword} onChange={handleChange} />
             <i className="bx bxs-alt"></i>
           </div>
           {error && <p>{error}</p>}
@@ -64,7 +64,7 @@ const Login = () => {
               <input type="checkbox" />
               Remember me
             </label>
-            <Link to="/">Forgot Password</Link>
+            <Link to="/resetpasword">Forgot Password</Link>
           </div>
           <button className="btn" onClick={submitLogin}>
             LogIn
@@ -73,7 +73,7 @@ const Login = () => {
           <div className="rlink">
             <p>
               Don't have an account?
-              <Link to="/signup">Register</Link>
+              <Link to="/signup" className="link">Register</Link>
             </p>
           </div>
         </form>

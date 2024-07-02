@@ -28,7 +28,7 @@ const Home = () => {
 
   return (
     <>
-      <StyledHeader isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
+      <StyledHeader isLoggedIn={isLoggedIn} handleLogout={handleLogout} name={user?.firstName+" "+user?.lastName} />
       <div className="header2">
         <p>
           The ability to take the perspective of and empathize with others,

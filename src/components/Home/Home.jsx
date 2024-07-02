@@ -3,18 +3,18 @@ import "./index.css";
 import SocialPost from "../SocialPost";
 import CamPaignImg from "../../images/campaign1.jpg";
 import Logo from "../../images/logo.jpg";
+import HeaderBg from "../../images/background.jpg";
 import CamPaignImg2 from "../../images/campaign2.jpg";
 import CamPaignImg3 from "../../images/campaign3.jpg";
 import CamPaignImg4 from "../../images/campaign4.jpg";
+
 const Home = () => {
   return (
     <>
       <header>
         <nav>
+            <img src={Logo} alt="img" width="48px" height="48px" />
           <ul className="menubar">
-          <div className="image">
-        <img src={Logo} />
-      </div>
             <li>
               <Link to="/">Home</Link>
             </li>
@@ -31,13 +31,17 @@ const Home = () => {
             </Link>
           </div>
         </nav>
-      </header>
-      <div className="heading">
+        <div className="image">
+          <img src={HeaderBg}  width="100%" />
+          <div className="heading">
         <h1> Social Awareness</h1>
         <div className="floating-text">
           <h2> Join us in making difference!</h2>
         </div>
       </div>
+        </div>
+      </header>
+     
       <div className="header2">
         <p>
           {" "}
@@ -48,7 +52,13 @@ const Home = () => {
         </p>
       </div>
       <div className="topic1">
-        <SocialPost title="Environment Sustainability" description={"Greener tomorrow ? Need to RRR (Reduce, reuse, recycle) We can significantly improve our planet's health by implementing sustainable practices such as waste reduction, recycling, and energy conservation. Join us in our endeavour to safeguard the environment and ensure a sustainable future for generations to come. To read more about this cause"} img={CamPaignImg} />
+        <SocialPost
+          title="Environment Sustainability"
+          description={
+            "Greener tomorrow ? Need to RRR (Reduce, reuse, recycle) We can significantly improve our planet's health by implementing sustainable practices such as waste reduction, recycling, and energy conservation. Join us in our endeavour to safeguard the environment and ensure a sustainable future for generations to come. To read more about this cause"
+          }
+          img={CamPaignImg}
+        />
         <SocialPost
           title={"Mental Health Awareness"}
           description={
@@ -64,7 +74,7 @@ const Home = () => {
           img={CamPaignImg3}
         />
 
-<SocialPost
+        <SocialPost
           title={"Mental Health Awareness"}
           description={
             "“No one is alone Many people are hesitant to seek help for mental health concerns due to the stigma associated with them. Let's work together to break the stigma by raising awareness, offering support, and providing resources to people with mental health difficulties.To read more about this cause"

@@ -1,8 +1,8 @@
 .body {
   margin: 0;
   padding: 2px;
-  background-color: white;
-  color: white;
+  background-color: rgb(177, 218, 244);
+  color: white
 
 }
 .image {
@@ -11,12 +11,14 @@
   align-items: center;
   width: 100%;
   height: 100%;
+  position: relative;
 }
 
 .image img {
   max-width: 100%;
   height: auto;
   border-radius: 5px;
+  opacity: 0.8;
 }
 
 header {
@@ -30,6 +32,10 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 12px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
 }
 
 .menubar {
@@ -78,10 +84,12 @@ nav {
 }
 
 .heading {
-  background-color: #0f70c1;
   color: white;
+  font-size: 40px;
   padding: 20px;
   text-align: center;
+  position: absolute;
+  
 }
 .login {
   padding: 20px;
@@ -130,7 +138,7 @@ nav {
 }
 
 .campaign {
-  background-color: white;
+  background-color: skyblue;
   border: 1px solid #ddd;
   border-radius: 5px;
   width: 45%;
@@ -159,11 +167,13 @@ nav {
 .like{
     width: 60px;
     height: 60px;
+    border-radius: 15px;
 }
 .like img{
     display: flex;
     width: 60px;
     height: 60px;
+    border-radius: 15px;
 
 }
 .like:hover{
@@ -172,6 +182,7 @@ nav {
 .comment{
     width: 60px;
     height: 60px;
+    border-radius: 15px;
 }
 .comment:hover{
     background-color: skyblue;
@@ -179,6 +190,7 @@ nav {
 .comment img{
     width: 60px;
     height: 60px;
+    border-radius: 15px;
 
 }
 

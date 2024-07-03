@@ -1,20 +1,16 @@
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Button } from "@mui/material";
 
+import { useSocialPost } from "../../Providers/socialPostProvider";
+import StyledModal from "../Modal";
 import SocialPost from "../SocialPost";
-import CamPaignImg from "../../images/campaign1.jpg";
-import CamPaignImg2 from "../../images/campaign2.jpg";
-import CamPaignImg3 from "../../images/campaign3.jpg";
-import CamPaignImg4 from "../../images/campaign4.jpg";
 import { useUser } from "../../Providers/userProvider";
 import Footer from "../Footer/index";
 import StyledHeader from "../Header";
 
 //css
 import "./index.css";
-import { useSocialPost } from "../../Providers/socialPostProvider";
-import { Button } from "@mui/material";
-import StyledModal from "../Modal";
-import { useState } from "react";
 
 const Home = () => {
   const { isLoggedIn, user, signout } = useUser();

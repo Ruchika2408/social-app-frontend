@@ -1,24 +1,53 @@
-import Comment from "../../images/comment.jpeg";
-import Like from "../../images/like.jpeg";
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import CardMedia from '@mui/material/CardMedia';
+import CardContent from '@mui/material/CardContent';
+import CardActions from '@mui/material/CardActions';
+import Avatar from '@mui/material/Avatar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import { red } from '@mui/material/colors';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import CommentIcon from '@mui/icons-material/Comment';
 
 const SocialPost = ({ title, description, img, url }) => {
     return (
-        <div className="campaign">
-            <img src={img} className="campaignImg" alt="campaign" />
-            <h3>{title}</h3>
-            <p>
-                {description} <a href="https://www.who.int/health-topics/mental-health#tab=tab_1">Click Here</a>
-            </p>
-            <div className="buttonsWrapper">
-                <button className="like">
-                    <img src={Like} alt="like" />
-                </button>
-                <button className="comment">
-                    <img src={Comment} width="200px" height="200px" alt="comment" />
-                </button>
-            </div>
-
-        </div>
+        <Card sx={{ maxWidth: 400 }}>
+        <CardHeader
+          avatar={
+            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+              R
+            </Avatar>
+          }
+          action={
+            <IconButton aria-label="settings">
+              <MoreVertIcon />
+            </IconButton>
+          }
+          title={title}
+          subheader="September 14, 2016"
+        />
+        <CardMedia
+          component="img"
+          height="194"
+          image={img}
+          alt="Paella dish"
+        />
+        <CardContent>
+          <Typography variant="body2" color="text.secondary">
+            {description}
+          </Typography>
+        </CardContent>
+        <CardActions disableSpacing>
+          <IconButton aria-label="add to favorites">
+            <FavoriteIcon />
+          </IconButton>
+          <IconButton aria-label="share">
+            <CommentIcon />
+          </IconButton>
+        </CardActions>
+      </Card>
     );
 }
 

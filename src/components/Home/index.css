@@ -27,7 +27,7 @@ header {
 .topic1 {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  gap: 24px;
   padding: 20px;
   color: black;
   text-align: center;

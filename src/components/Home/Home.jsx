@@ -45,13 +45,16 @@ const Home = () => {
         </p>
       </div>
       <div className="postContainer">
-
         <div className="topic1">
           {socialPosts && socialPosts.map((post) => <SocialPost
             title={post.title}
             description={post.description}
             img={post.imgUrl}
-            key={postMessage.title}
+            key={post.title}
+            email={post.email}
+            likes={post.likes}
+            time={post.time}
+            comments={post.comments}
           />)}
         </div>
         <Button variant="contained" onClick={() => setOpen(true)}>Create Post</Button>

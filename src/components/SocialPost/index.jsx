@@ -11,13 +11,13 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import CommentIcon from '@mui/icons-material/Comment';
 
-const SocialPost = ({ title, description, img, url }) => {
+const SocialPost = ({ title, description, img, time, url, email, likes, comments }) => {
     return (
         <Card sx={{ maxWidth: 400 }}>
         <CardHeader
           avatar={
             <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-              R
+              {email.charAt(0).toUpperCase()}
             </Avatar>
           }
           action={
@@ -26,7 +26,7 @@ const SocialPost = ({ title, description, img, url }) => {
             </IconButton>
           }
           title={title}
-          subheader="September 14, 2016"
+          subheader={time}
         />
         <CardMedia
           component="img"
@@ -41,7 +41,7 @@ const SocialPost = ({ title, description, img, url }) => {
         </CardContent>
         <CardActions disableSpacing>
           <IconButton aria-label="add to favorites">
-            <FavoriteIcon />
+            <FavoriteIcon /> {likes}
           </IconButton>
           <IconButton aria-label="share">
             <CommentIcon />

@@ -31,7 +31,7 @@ export const SocialPostProvider = ({ children }) => {
              await fetchPosts();
          }
         return response;
-    }, [])
+    }, [fetchPosts])
 
     const fetchSocialPost = useCallback(async (email, title) => {
         const response = await getSocialPost(email, title);
@@ -46,7 +46,7 @@ export const SocialPostProvider = ({ children }) => {
        const fetch = async () => await fetchPosts()
 
        fetch()
-    }, [])
+    }, [fetchPosts])
 
     return <SocialPostContext.Provider value={value}>{children}</SocialPostContext.Provider>
 };

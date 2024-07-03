@@ -24,9 +24,19 @@ header {
   font-size: 24px;
 }
 
+.postContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 24px;
+}
+
 .topic1 {
   display: flex;
   flex-wrap: wrap;
+  margin: 0 auto;
   gap: 24px;
   padding: 20px;
   color: black;

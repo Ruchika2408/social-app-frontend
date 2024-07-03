@@ -2,13 +2,16 @@ import './App.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import routes from './routes/route';
 import { UserProvider } from './Providers/userProvider';
+import { SocialPostProvider } from './Providers/socialPostProvider';
 
 const router = createBrowserRouter(routes);
 
 function App() {
   return (
     <UserProvider>
-      <RouterProvider router={router} />
+      <SocialPostProvider>
+        <RouterProvider router={router} />
+      </SocialPostProvider>
     </UserProvider>
   )
 }

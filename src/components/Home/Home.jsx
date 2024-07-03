@@ -11,9 +11,14 @@ import StyledHeader from "../Header";
 
 //css
 import "./index.css";
+import { useSocialPost } from "../../Providers/socialPostProvider";
+import { Button } from "@mui/material";
+import StyledModal from "../Modal";
+import { useState } from "react";
 
 const Home = () => {
   const { isLoggedIn, user, signout } = useUser();
+  const { socialPosts } = useSocialPost();
   const navigate = useNavigate()
 
   const handleLogout = async () => {
@@ -25,10 +30,16 @@ const Home = () => {
       }
     }
   }
+  
+  const [open,setOpen] = useState(false);
+  const handleClose = () => {
+    setOpen(false)
+  }
+
 
   return (
     <>
-      <StyledHeader isLoggedIn={isLoggedIn} handleLogout={handleLogout} name={user?.firstName+" "+user?.lastName} />
+      <StyledHeader isLoggedIn={isLoggedIn} handleLogout={handleLogout} name={user?.firstName + " " + user?.lastName} />
       <div className="header2">
         <p>
           The ability to take the perspective of and empathize with others,
@@ -37,36 +48,19 @@ const Home = () => {
           family, school, and community resources and supports.
         </p>
       </div>
-      <div className="topic1">
-        <SocialPost
-          title="Environment Sustainability"
-          description={
-            "Greener tomorrow ? Need to RRR (Reduce, reuse, recycle) We can significantly improve our planet's health by implementing sustainable practices such as waste reduction, recycling, and energy conservation. Join us in our endeavour to safeguard the environment and ensure a sustainable future for generations to come. To read more about this cause"
-          }
-          img={CamPaignImg}
-        />
-        <SocialPost
-          title={"Mental Health Awareness"}
-          description={
-            "“No one is alone Many people are hesitant to seek help for mental health concerns due to the stigma associated with them. Let's work together to break the stigma by raising awareness, offering support, and providing resources to people with mental health difficulties.To read more about this cause"
-          }
-          img={CamPaignImg2}
-        />
-        <SocialPost
-          title={"Mental Health Awareness"}
-          description={
-            "“No one is alone Many people are hesitant to seek help for mental health concerns due to the stigma associated with them. Let's work together to break the stigma by raising awareness, offering support, and providing resources to people with mental health difficulties.To read more about this cause"
-          }
-          img={CamPaignImg3}
-        />
+      <div className="postContainer">
 
-        <SocialPost
-          title={"Mental Health Awareness"}
-          description={
-            "“No one is alone Many people are hesitant to seek help for mental health concerns due to the stigma associated with them. Let's work together to break the stigma by raising awareness, offering support, and providing resources to people with mental health difficulties.To read more about this cause"
-          }
-          img={CamPaignImg4}
-        />
+        <div className="topic1">
+          {socialPosts && socialPosts.map((post) => <SocialPost
+            title={post.title}
+            description={post.description}
+            img={post.imgUrl}
+            key={postMessage.title}
+          />)}
+        </div>
+        <Button variant="contained" onClick={() => setOpen(true)}>Create Post</Button>
+      <StyledModal open={open} handleClose={handleClose}/>
+     
       </div>
       <Footer />
     </>

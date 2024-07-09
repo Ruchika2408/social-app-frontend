@@ -1,3 +1,4 @@
+import ForgetPassword from "../components/ForgetPassword";
 import Home from "../components/Home/Home";
 import Login from "../components/Login/Login";
 import Signup from "../components/Signup/Signup";
@@ -17,8 +18,12 @@ const routes = [
     element: <Signup />,
   },
   {
+    path: "/forgetpassword",
+    element: <ForgetPassword />
+  },
+  { 
     path: "/contact",
-    element: <Contact />,
+    element: <Contact />
   }
 ];
 

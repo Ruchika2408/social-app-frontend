@@ -15,9 +15,6 @@ const Home = () => {
         <nav>
           <img src={Logo} alt="img" width="48px" height="48px" />
           <ul className="menubar">
-            <div className="image">
-              <img src={Logo} alt="logo" />
-            </div>
             <li>
               <Link to="/">Home</Link>
             </li>

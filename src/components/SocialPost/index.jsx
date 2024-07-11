@@ -8,22 +8,16 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import CommentIcon from '@mui/icons-material/Comment';
 
 const SocialPost = ({ title, description, img, time, url, email, likes, comments }) => {
     return (
-        <Card sx={{ maxWidth: "400px", width: "30%" }}>
+        <Card sx={{ maxWidth: "32%" }}>
         <CardHeader
           avatar={
             <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
               {email.charAt(0).toUpperCase()}
             </Avatar>
-          }
-          action={
-            <IconButton aria-label="settings">
-              <MoreVertIcon />
-            </IconButton>
           }
           title={title}
           subheader={time}

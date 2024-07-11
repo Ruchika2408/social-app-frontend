@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import "./signup.css";
+import SignUpImg from "../../images/signup.jpg";
 import { useState } from "react";
 import { useUser } from "../../Providers/userProvider";
 
@@ -34,7 +35,7 @@ const Signup = () => {
 
   return (
     <div className="container">
-      <img className="video" src="https://i.pinimg.com/originals/55/01/60/5501609ee45d514d1f2c4a63502045e2.gif" alt="gif" />
+      <img className="image" src={SignUpImg} alt="signup" />
       <div className="outbox">
         <form>
           <h1>Please fill the form to SignUp!!</h1>

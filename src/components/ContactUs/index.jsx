@@ -1,15 +1,17 @@
 import { Link } from "react-router-dom";
 import "./contact.css";
+import ContactImg from "../../images/contact.jpg";
 
 const Contact = () => {
   return (
     <>
     <div class ="heading">
+    <img className="image" src={ContactImg} alt="contact-bg" />
         <div class="line">
     <header>
         <nav>
             <ul class="menubar">
-                <li><a href="home.jsx">Back to Home</a></li>
+                <li><Link to="/home">Back to Home</Link></li>
                 </ul>
         </nav>
     </header>

@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
+import LoginImg from "../../images/login.jpg";
 import { useUser } from "../../Providers/userProvider";
 
 //css
@@ -46,7 +47,7 @@ const Login = () => {
 
   return (
     <div className="container">
-      <img className="video" src="https://i.pinimg.com/originals/55/01/60/5501609ee45d514d1f2c4a63502045e2.gif" alt="gif" />
+      <img className="image" src={LoginImg} alt="login-bg" />
       <div className="outbox">
         <form>
           <h1>Login</h1>

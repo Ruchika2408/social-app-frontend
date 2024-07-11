@@ -33,7 +33,7 @@ const StyledHeader = ({ isLoggedIn, handleLogout, name }) => {
                     </Link>
                 </div>
             </nav>
-            <div className="image">
+            <div className="image-bg">
                 <img src={HeaderBg} width="100%" alt="header" />
                 <div className="heading">
                     <h1> Social Awareness</h1>

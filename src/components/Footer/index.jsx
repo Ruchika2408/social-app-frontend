@@ -29,7 +29,7 @@ const Footer = () => {
                             ACTACS202303005@indusinstitute.edu.au
                         </a>
                     </p>
-                    <p>Phone: 123-234-345 </p>
+                    <p>Phone: +61 451-392-990 </p>
                 </div>
             </div>
             <div className="footer3">

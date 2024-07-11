@@ -13,7 +13,7 @@ import CommentIcon from '@mui/icons-material/Comment';
 
 const SocialPost = ({ title, description, img, time, url, email, likes, comments }) => {
     return (
-        <Card sx={{ maxWidth: 400 }}>
+        <Card sx={{ maxWidth: "400px", width: "30%" }}>
         <CardHeader
           avatar={
             <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">

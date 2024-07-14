@@ -9,8 +9,7 @@ import { useUser } from "../../Providers/userProvider";
 import "./index.css";
 
 const StyledHeader = ({ handleLogout, name}) => {
-  const {isLoggedIn, user} = useUser();
- console.log(name);
+  const {isLoggedIn} = useUser();
     return (
         <header>
             <nav>

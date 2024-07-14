@@ -75,7 +75,7 @@ body {
 
 .outbox .rforgot {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   font-size: 14.5px;
   margin: -15px 0 15px;
 }

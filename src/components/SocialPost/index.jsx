@@ -16,6 +16,7 @@ import Collapse from '@mui/material/Collapse';
 import { useUser } from '../../Providers/userProvider';
 import "./index.css"
 import { useSocialPost } from '../../Providers/socialPostProvider';
+import { createStyles } from '@mui/material';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -42,13 +43,14 @@ const SocialPost = ({ title, description, img, time, url, email, likes, comments
   }
 
   return (
-    <Card sx={{ maxWidth: "31%" }}>
+    <Card sx={{ maxWidth: "31%", minWidth: "31%", width: "31%" }}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
             {email.charAt(0).toUpperCase()}
           </Avatar>
         }
+        sx={{}}
         title={title}
         subheader={time}
       />

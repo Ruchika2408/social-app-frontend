@@ -21,6 +21,12 @@ export const UserProvider = ({ children }) => {
 
     const fetchUser = useCallback(async (email) => {
         const response = await findUser(email);
+        console.log(response);
+        if(response.code === "userExist"){
+            setLoggedIn(true)
+            setUser(response.user)
+        }
+            else setLoggedIn(false);
         return response;
     }, []);
 
@@ -73,10 +79,14 @@ export const UserProvider = ({ children }) => {
 
     useEffect(() => {
         const email = localStorage.getItem("id");
-        if (email) {
-            fetchUser(email)
+        console.log(email);
+        const getUser = async () => {
+            if (email) {
+                await fetchUser(email)
+            }
         }
-    },[fetchUser]);
+        getUser()
+    }, []);
 
     return <UserContext.Provider value={value}>{children}</UserContext.Provider>
 };

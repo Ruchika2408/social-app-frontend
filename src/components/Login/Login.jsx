@@ -61,10 +61,6 @@ const Login = () => {
           </div>
           {error && <p>{error}</p>}
           <div className="rforgot">
-            <label>
-              <input type="checkbox" />
-              Remember me
-            </label>
             <Link to="/resetpasword">Forgot Password</Link>
           </div>
           <button className="btn" onClick={submitLogin}>

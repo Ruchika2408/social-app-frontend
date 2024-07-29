@@ -36,7 +36,7 @@ const Home = () => {
 
   return (
     <>
-      <StyledHeader isLoggedIn={isLoggedIn} handleLogout={handleLogout} name={user?.firstName + " " + user?.lastName} />
+      <StyledHeader handleLogout={handleLogout} name={`${user.firstName} ${user.lastName}`}/>
       <div className="header2">
         <p>
           The ability to take the perspective of and empathize with others,
@@ -51,7 +51,7 @@ const Home = () => {
             title={post.title}
             description={post.description}
             img={post.imgUrl}
-            key={post.title}
+            key={post.id}
             email={post.email}
             likes={post.likes}
             time={post.time}

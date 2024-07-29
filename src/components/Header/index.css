@@ -20,6 +20,9 @@ header {
     margin-top: 10px;
 }
 
+.userName{
+    color: #000;
+}
 nav {
     display: flex;
     justify-content: space-between;

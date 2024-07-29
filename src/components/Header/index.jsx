@@ -3,17 +3,19 @@ import { Link } from "react-router-dom";
 
 import Logo from "../../images/logo.jpg";
 import HeaderBg from "../../images/background.jpg";
+import { useUser } from "../../Providers/userProvider";
 
 //css
 import "./index.css";
 
-const StyledHeader = ({ isLoggedIn, handleLogout, name }) => {
+const StyledHeader = ({ handleLogout, name}) => {
+  const {isLoggedIn} = useUser();
     return (
         <header>
             <nav>
                 <div className="user">
                 <img src={Logo} alt="img-logo" width="48px" height="48px" />
-                {isLoggedIn && name && <p>{name}</p>}
+                 <p className="userName">{name}</p>
                 </div>
                 <ul className="menubar">
                     <li>

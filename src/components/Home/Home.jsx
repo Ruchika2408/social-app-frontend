@@ -8,6 +8,7 @@ import SocialPost from "../SocialPost";
 import { useUser } from "../../Providers/userProvider";
 import Footer from "../Footer/index";
 import StyledHeader from "../Header";
+import SwipeableTextMobileStepper from "../AdvertisementCarousel";
 
 //css
 import "./index.css";
@@ -59,7 +60,7 @@ const Home = () => {
         </div>
         <Button variant="contained" onClick={() => setOpen(true)}>Create Post</Button>
       <StyledModal open={open} handleClose={handleClose}/>
-     
+     <SwipeableTextMobileStepper />
       </div>
       <Footer />
     </>

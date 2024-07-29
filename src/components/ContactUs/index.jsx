@@ -6,7 +6,6 @@ const Contact = () => {
   return (
     <>
     <div class ="heading">
-    <img className="image" src={ContactImg} alt="contact-bg" />
         <div class="line">
     <header>
         <nav>

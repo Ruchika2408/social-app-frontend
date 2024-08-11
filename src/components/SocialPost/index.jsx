@@ -10,13 +10,13 @@ import { red } from '@mui/material/colors';
 import CommentIcon from '@mui/icons-material/Comment';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useState } from 'react';
 import styled from '@emotion/styled';
 import Collapse from '@mui/material/Collapse';
 import { useUser } from '../../Providers/userProvider';
 import "./index.css"
 import { useSocialPost } from '../../Providers/socialPostProvider';
-import { createStyles } from '@mui/material';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -28,18 +28,26 @@ const ExpandMore = styled((props) => {
 
 const SocialPost = ({ title, description, img, time, url, email, likes, comments }) => {
   const [expanded, setExpanded] = useState();
+
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
   
   const {isLoggedIn, user} = useUser();
-  const {commentPosts} = useSocialPost();
+  const liked = likes.filter(item => item.likeBy === user.email);
+  const [like, setLike] = useState(liked[0]?.like || false)
+  const {commentPosts, likePosts} = useSocialPost();
   const [comment, setComment] = useState();
   
   const onComment = async() => {
      if(comment){
        const resp = await commentPosts(email, title, comment, user.email);
      }
+  }
+
+  const onLike = async() => {
+    setLike(!like)
+     const response = await likePosts(email,title, !like, user.email)
   }
 
   return (
@@ -66,8 +74,8 @@ const SocialPost = ({ title, description, img, time, url, email, likes, comments
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteBorderOutlinedIcon /> {likes}
+        <IconButton aria-label="add to favorites" onClick={onLike}>
+          {like ? <FavoriteIcon />:<FavoriteBorderOutlinedIcon />} {likes ? likes.length : 0}
         </IconButton>
         <IconButton aria-label="share" onClick={onComment}>
           <CommentIcon color={isLoggedIn ? 'primary' : "inherit"} />

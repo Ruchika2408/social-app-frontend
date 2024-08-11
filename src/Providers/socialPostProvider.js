@@ -11,6 +11,7 @@ import createSocialPost from "../services/createPost";
 import getSocialPosts from "../services/socialPosts";
 import { useUser } from "./userProvider";
 import commentPost from "../services/commentPost";
+import likePost from "../services/likePost";
 
 const SocialPostContext = createContext();
 
@@ -44,7 +45,7 @@ export const SocialPostProvider = ({ children }) => {
 
     const commentPosts = useCallback(async(email,title, comment, commentBy) => {
         console.log(email,title,comment)
-       if(email, title, comment, commentBy){
+       if(email && title && comment && commentBy){
         const response = await commentPost(email, title, comment, commentBy);
         if(response.code === "socialPostExist")
             await fetchPosts()
@@ -52,9 +53,19 @@ export const SocialPostProvider = ({ children }) => {
        }
     },[])
 
+    const likePosts = useCallback(async(email, title, like, likeBy) => {
+        if(email && title && like && likeBy){
+            const response = await likePost(email,title,like,likeBy);
+            if(response.code === "socialPostLiked"){
+                await fetchPosts();
+            }
+            return response;
+        }
+    },[])
+
     const value = useMemo(() => ({
-        fetchPosts, socialPosts, fetchSocialPost, createPost, commentPosts
-    }), [fetchPosts, socialPosts, fetchSocialPost, createPost, commentPosts])
+        fetchPosts, socialPosts, fetchSocialPost, createPost, commentPosts, likePosts
+    }), [fetchPosts, socialPosts, fetchSocialPost, createPost, commentPosts, likePosts])
 
     useEffect(() => {
        const fetch = async () => await fetchPosts()

@@ -1,8 +1,9 @@
 import axios from "axios";
 
-const likePost = async (email,title) => {
+const likePost = async (email,title, like, likeBy) => {
+    console.log("check like")
     try {
-        const response = await axios.post("http://localhost:3001/api/socialPost/like", { email, title }).then((response) => response.data);
+        const response = await axios.post("http://localhost:3001/api/socialPost/like", { email, title, like, likeBy }).then((response) => response.data);
         return response;
     }
     catch (error) {

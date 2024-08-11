@@ -17,19 +17,18 @@ const StyledModal = ({ open, handleClose }) => {
         imgUrl: "",
         time: "",
         comments: [],
-        likes: 0
+        likes: []
     })
 
     const handleInputChange = (e) => {
         const {id, value} = e.target;
-
         setPost({...post, [id]: value})
     }
 
     const createSocialPost = async() => {
         setPost({...post, time: new Date() })
-       const response = await createPost(post);
-       console.log(response);
+        const postData = {...post, time: new Date()}
+       const response = await createPost(postData);
        handleClose();
     }
 
@@ -42,7 +41,7 @@ const StyledModal = ({ open, handleClose }) => {
             imgUrl: "",
             time: "",
             comments: [],
-            likes: 0
+            likes: []
         })
     }
 

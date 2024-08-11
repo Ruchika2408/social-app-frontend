@@ -62,6 +62,7 @@ const Home = () => {
       <StyledModal open={open} handleClose={handleClose}/>
      <SwipeableTextMobileStepper />
       </div>
+      
       <Footer />
     </>
   );

@@ -46,8 +46,8 @@ const SocialPost = ({ title, description, img, time, url, email, likes, comments
   }
 
   const onLike = async() => {
+    const response = await likePosts(email,title, !like, user.email)
     setLike(!like)
-     const response = await likePosts(email,title, !like, user.email)
   }
 
   return (
@@ -74,8 +74,8 @@ const SocialPost = ({ title, description, img, time, url, email, likes, comments
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites" onClick={onLike}>
-          {like ? <FavoriteIcon />:<FavoriteBorderOutlinedIcon />} {likes ? likes.length : 0}
+        <IconButton aria-label="add to favorites" >
+          {like ? <FavoriteIcon variant="primary" onClick={onLike}/>:<FavoriteBorderOutlinedIcon onClick={onLike}/>} {likes ? likes.length : 0}
         </IconButton>
         <IconButton aria-label="share" onClick={onComment}>
           <CommentIcon color={isLoggedIn ? 'primary' : "inherit"} />

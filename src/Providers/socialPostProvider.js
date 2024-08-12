@@ -8,8 +8,7 @@ import {
 } from "react";
 import getSocialPost from "../services/getSocialPost";
 import createSocialPost from "../services/createPost";
-import getSocialPosts from "../services/socialPosts";
-import { useUser } from "./userProvider";
+import getSocialPosts from "../services/socialPosts";  
 import commentPost from "../services/commentPost";
 import likePost from "../services/likePost";
 
@@ -17,13 +16,10 @@ const SocialPostContext = createContext();
 
 export const SocialPostProvider = ({ children }) => {
     const [socialPosts, setSocialPosts] = useState([]);
-    const {user} = useUser();
-
+  
     const fetchPosts = useCallback(async () => {
         const response = await getSocialPosts();
-        console.log(response);
-        if (response.code === "socialPostsExist") {
-            console.log("check", response.socialPosts)
+         if (response.code === "socialPostsExist") {
             setSocialPosts(response.socialPosts);
         }
         return response;
@@ -44,7 +40,6 @@ export const SocialPostProvider = ({ children }) => {
     }, [])
 
     const commentPosts = useCallback(async(email,title, comment, commentBy) => {
-        console.log(email,title,comment)
        if(email && title && comment && commentBy){
         const response = await commentPost(email, title, comment, commentBy);
         if(response.code === "socialPostExist")

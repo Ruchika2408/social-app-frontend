@@ -69,13 +69,16 @@ export const SocialPostProvider = ({ children }) => {
         }
     },[])
 
+    const handleSocialPost = (value) => {
+        setSocialPost(value)
+    }
+
     const value = useMemo(() => ({
-        fetchPosts, socialPosts, fetchSocialPost, createPost, commentPosts, likePosts, verifyPost, currentPost, setSocialPost
-    }), [fetchPosts, socialPosts, fetchSocialPost, createPost, commentPosts, likePosts, verifyPost, currentPost, setSocialPost])
+        fetchPosts, socialPosts, fetchSocialPost, createPost, commentPosts, likePosts, verifyPost, currentPost, handleSocialPost
+    }), [fetchPosts, socialPosts, fetchSocialPost, createPost, commentPosts, likePosts, verifyPost, currentPost, handleSocialPost])
 
     useEffect(() => {
        const fetch = async () => await fetchPosts()
-
        fetch() 
     }, [fetchPosts])
 

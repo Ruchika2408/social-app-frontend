@@ -10,7 +10,7 @@ import { ToastContainer, toast } from 'react-toastify';
 
 const StyledModal = ({ open, handleClose }) => {
     const {user} = useUser()
-    const {createPost, setSocialPost}  = useSocialPost();
+    const {createPost, handleSocialPost}  = useSocialPost();
 
     const [post, setPost] = useState({
         email: user.email,
@@ -28,14 +28,15 @@ const StyledModal = ({ open, handleClose }) => {
     }
 
     const createSocialPost = async() => {
-        setSocialPost({...post, time: new Date()})
+        console.log()
+        handleSocialPost({...post, time: new Date()})
         setPost({...post, time: new Date() })
         const postData = {email:user.email, title: post.title}
        const response = await createPost(postData);
+       handleClose();
        if(response.code === "verificationEmailSent"){
         toast("Admin will approve your post please wait for 2-3 working days.");
        }
-       handleClose();
     }
 
     const cancelPost = () => {
@@ -45,6 +46,15 @@ const StyledModal = ({ open, handleClose }) => {
             title: "",
             description: "",
             imgUrl: "",
+            time: "",
+            comments: [],
+            likes: []
+        })
+        handleSocialPost({
+            email: user.email,
+            title: "",
+            description: "",
+            imgUryrl: "",
             time: "",
             comments: [],
             likes: []

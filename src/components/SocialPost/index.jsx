@@ -45,7 +45,7 @@ const SocialPost = ({ title, description, img, time, url, email, likes, comments
      if(comment){
        const resp = await commentPosts(email, title, comment, user.email);
        if(resp.code === "socialPostCommented"){
-        // toast("comment successfully")
+        toast("comment successfully")
        }
      }
   }
@@ -54,7 +54,7 @@ const SocialPost = ({ title, description, img, time, url, email, likes, comments
     const response = await likePosts(email,title, !like, user.email)
     setLike(!like)
     if(response.code === "socialPostLiked"){
-      // toast("Post liked.")
+      toast("Post liked.")
     }
   }
 
@@ -110,6 +110,7 @@ const SocialPost = ({ title, description, img, time, url, email, likes, comments
         </CardContent>
       </Collapse>
     </Card>
+    <ToastContainer />
     </>
   );
 }

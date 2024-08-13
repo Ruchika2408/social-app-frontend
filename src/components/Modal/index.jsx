@@ -5,10 +5,12 @@ import { useUser } from '../../Providers/userProvider';
 import { Button, TextField } from '@mui/material';
 import { useSocialPost } from '../../Providers/socialPostProvider';
 import "./index.css"
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 
 const StyledModal = ({ open, handleClose }) => {
     const {user} = useUser()
-    const {createPost}  = useSocialPost();
+    const {createPost, setSocialPost}  = useSocialPost();
 
     const [post, setPost] = useState({
         email: user.email,
@@ -26,9 +28,13 @@ const StyledModal = ({ open, handleClose }) => {
     }
 
     const createSocialPost = async() => {
+        setSocialPost({...post, time: new Date()})
         setPost({...post, time: new Date() })
-        const postData = {...post, time: new Date()}
+        const postData = {email:user.email, title: post.title}
        const response = await createPost(postData);
+       if(response.code === "verificationEmailSent"){
+        toast("Admin will approve your post please wait for 2-3 working days.");
+       }
        handleClose();
     }
 
@@ -46,6 +52,7 @@ const StyledModal = ({ open, handleClose }) => {
     }
 
     return (
+        <>
         <Modal
             open={open}
             onClose={handleClose}
@@ -62,6 +69,8 @@ const StyledModal = ({ open, handleClose }) => {
             </div>
             </Box>
         </Modal>
+        <ToastContainer />
+        </>
     )
 }
 

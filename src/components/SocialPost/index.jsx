@@ -17,6 +17,8 @@ import Collapse from '@mui/material/Collapse';
 import { useUser } from '../../Providers/userProvider';
 import "./index.css"
 import { useSocialPost } from '../../Providers/socialPostProvider';
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -42,15 +44,22 @@ const SocialPost = ({ title, description, img, time, url, email, likes, comments
   const onComment = async() => {
      if(comment){
        const resp = await commentPosts(email, title, comment, user.email);
+       if(resp.code === "socialPostCommented"){
+        // toast("comment successfully")
+       }
      }
   }
 
   const onLike = async() => {
     const response = await likePosts(email,title, !like, user.email)
     setLike(!like)
+    if(response.code === "socialPostLiked"){
+      // toast("Post liked.")
+    }
   }
 
   return (
+    <>
     <Card sx={{ maxWidth: "31%", minWidth: "31%", width: "31%" }}>
       <CardHeader
         avatar={
@@ -101,6 +110,7 @@ const SocialPost = ({ title, description, img, time, url, email, likes, comments
         </CardContent>
       </Collapse>
     </Card>
+    </>
   );
 }
 

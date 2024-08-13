@@ -11,12 +11,15 @@ import createSocialPost from "../services/createPost";
 import getSocialPosts from "../services/socialPosts";  
 import commentPost from "../services/commentPost";
 import likePost from "../services/likePost";
+import verifySocialPost from "../services/verifyPost";
+import userEvent from "@testing-library/user-event";
 
 const SocialPostContext = createContext();
 
 export const SocialPostProvider = ({ children }) => {
     const [socialPosts, setSocialPosts] = useState([]);
-  
+    const [currentPost, setSocialPost] = useState();
+
     const fetchPosts = useCallback(async () => {
         const response = await getSocialPosts();
          if (response.code === "socialPostsExist") {
@@ -32,6 +35,14 @@ export const SocialPostProvider = ({ children }) => {
          }
         return response;
     }, [fetchPosts])
+
+    const verifyPost = useCallback(async() => {
+        console.log(currentPost)
+        const response = await verifySocialPost({...currentPost, email: userEvent.email});
+        if(response.code === "socialPostCreated"){
+            await fetchPosts()
+        }
+    },[])
 
     const fetchSocialPost = useCallback(async (email, title) => {
         const response = await getSocialPost(email, title);
@@ -59,8 +70,8 @@ export const SocialPostProvider = ({ children }) => {
     },[])
 
     const value = useMemo(() => ({
-        fetchPosts, socialPosts, fetchSocialPost, createPost, commentPosts, likePosts
-    }), [fetchPosts, socialPosts, fetchSocialPost, createPost, commentPosts, likePosts])
+        fetchPosts, socialPosts, fetchSocialPost, createPost, commentPosts, likePosts, verifyPost, currentPost, setSocialPost
+    }), [fetchPosts, socialPosts, fetchSocialPost, createPost, commentPosts, likePosts, verifyPost, currentPost, setSocialPost])
 
     useEffect(() => {
        const fetch = async () => await fetchPosts()

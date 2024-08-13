@@ -1,17 +1,23 @@
+// VerificationPage.js
 import React, { useEffect } from 'react';
-import './VerificationPage.css';
 import { Link } from 'react-router-dom';
-import { useSocialPost } from '../../Providers/socialPostProvider';
+import { useDispatch, useSelector } from 'react-redux';
+import { verifyPost } from '../../store/socialPostSlice';
+import './VerificationPage.css';
 
 const VerificationPage = () => {
-    const {verifyPost} = useSocialPost();
-    
+    const dispatch = useDispatch();
+    const currentPost = useSelector(state => state.socialPosts.currentPost);
+
     useEffect(() => {
         const checkPost = async () => {
-         await verifyPost()
-        }
-        checkPost()
-    }, []);
+            if (currentPost) {
+                await dispatch(verifyPost(currentPost));
+            }
+        };
+        checkPost();
+    }, [dispatch, currentPost]);
+
     return (
         <div className="container">
             <div className="success-box">

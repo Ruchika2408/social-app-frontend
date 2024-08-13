@@ -1,3 +1,5 @@
+import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
@@ -11,14 +13,16 @@ import CommentIcon from '@mui/icons-material/Comment';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { useState } from 'react';
 import styled from '@emotion/styled';
 import Collapse from '@mui/material/Collapse';
-import { useUser } from '../../Providers/userProvider';
-import "./index.css"
-import { useSocialPost } from '../../Providers/socialPostProvider';
-import { ToastContainer, toast } from 'react-toastify';
-  import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import {
+  likePosts,
+  commentPosts,
+} from '../../store/socialPostSlice';
+import { selectUser } from '../../store/userSlice';
+import './index.css';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -28,38 +32,41 @@ const ExpandMore = styled((props) => {
   marginLeft: 'auto',
 }));
 
-const SocialPost = ({ title, description, img, time, url, email, likes, comments }) => {
-  const [expanded, setExpanded] = useState();
+const SocialPost = ({ title, description, img, time, email, likes = [], comments = [] }) => {
+  const [expanded, setExpanded] = useState(false);
+  const [like, setLike] = useState(false);
+  const [comment, setComment] = useState("");
+
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  const isLoggedIn = !!user.email;
+
+  const liked = likes.some(item => item.likeBy === user.email);
+  const [likedState, setLikedState] = useState(liked);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-  
-  const {isLoggedIn, user} = useUser();
-  const liked = likes.filter(item => item.likeBy === user.email);
-  const [like, setLike] = useState(liked[0]?.like || false)
-  const {commentPosts, likePosts} = useSocialPost();
-  const [comment, setComment] = useState();
-  
-  const onComment = async() => {
-     if(comment){
-       const resp = await commentPosts(email, title, comment, user.email);
-       if(resp.code === "socialPostCommented"){
-        toast("comment successfully")
-       }
-     }
-  }
 
-  const onLike = async() => {
-    const response = await likePosts(email,title, !like, user.email)
-    setLike(!like)
-    if(response.code === "socialPostLiked"){
-      toast("Post liked.")
+  const onComment = async () => {
+    if (comment) {
+      const resp = await dispatch(commentPosts({ email, title, comment, commentBy: user.email }));
+      if (resp.meta.requestStatus === 'fulfilled') {
+        toast("Comment successfully added");
+        setComment(""); // Clear the comment input after successful comment
+      }
     }
-  }
+  };
+
+  const onLike = async () => {
+    const response = await dispatch(likePosts({ email, title, like: !likedState, likeBy: user.email }));
+    if (response.meta.requestStatus === 'fulfilled') {
+      setLikedState(!likedState);
+      toast(likedState ? "Like removed." : "Post liked.");
+    }
+  };
 
   return (
-    <>
     <Card sx={{ maxWidth: "31%", minWidth: "31%", width: "31%" }}>
       <CardHeader
         avatar={
@@ -67,7 +74,6 @@ const SocialPost = ({ title, description, img, time, url, email, likes, comments
             {email.charAt(0).toUpperCase()}
           </Avatar>
         }
-        sx={{}}
         title={title}
         subheader={time}
       />
@@ -75,7 +81,7 @@ const SocialPost = ({ title, description, img, time, url, email, likes, comments
         component="img"
         height="194"
         image={img}
-        alt="Paella dish"
+        alt="Post image"
       />
       <CardContent sx={{ minHeight: "252px" }}>
         <Typography variant="body2" color="text.secondary">
@@ -83,35 +89,48 @@ const SocialPost = ({ title, description, img, time, url, email, likes, comments
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites" >
-          {like ? <FavoriteIcon variant="primary" onClick={onLike}/>:<FavoriteBorderOutlinedIcon onClick={onLike}/>} {likes ? likes.length : 0}
+        <IconButton aria-label="add to favorites" onClick={onLike}>
+          {likedState ? <FavoriteIcon /> : <FavoriteBorderOutlinedIcon />}
+          {likes.length}
         </IconButton>
-        <IconButton aria-label="share" onClick={onComment}>
-          <CommentIcon color={isLoggedIn ? 'primary' : "inherit"} />
+        <IconButton aria-label="comment" onClick={onComment}>
+          <CommentIcon color={isLoggedIn ? 'primary' : 'inherit'} />
         </IconButton>
-        {isLoggedIn && <input type="text" className='commentInput' value={comment} onChange={(e) => setComment(e.target.value)}/>}
-        {comments && <ExpandMore
-          expand={expanded} 
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </ExpandMore>}
+        {isLoggedIn && 
+          <input
+            type="text"
+            className='commentInput'
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            placeholder="Add a comment"
+          />
+        }
+        {comments.length > 0 && 
+          <ExpandMore
+            expand={expanded}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show more"
+          >
+            <ExpandMoreIcon />
+          </ExpandMore>
+        }
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          {comments && comments.map(item => <div style={{display: "flex", gap: "12px", alignItems: "center"}} key={item.comment}>
-            <Avatar sx={{ bgcolor: red[400], width: 24, height: 24 }}  aria-label="recipe">
-            {item.commentBy}
-          </Avatar>
-          <Typography sx={{margin:0}} paragraph>{item.comment}</Typography>
-          </div>)}
+          {comments.map((item) => (
+            <div style={{ display: "flex", gap: "12px", alignItems: "center" }} key={item.commentBy + item.comment}>
+              <Avatar sx={{ bgcolor: red[400], width: 24, height: 24 }} aria-label="commenter">
+                {item.commentBy.charAt(0).toUpperCase()}
+              </Avatar>
+              <Typography sx={{ margin: 0 }} paragraph>
+                {item.comment}
+              </Typography>
+            </div>
+          ))}
         </CardContent>
       </Collapse>
     </Card>
-    <ToastContainer />
-    </>
   );
 }
 

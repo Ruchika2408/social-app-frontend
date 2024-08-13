@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import "./contact.css";
-import ContactImg from "../../images/contact.jpg";
 
 const Contact = () => {
   return (

@@ -1,27 +1,39 @@
 import React, { useState } from 'react';
 import './index.css'; // Import your CSS file for styling
-import { useUser } from '../../Providers/userProvider';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUser, forgetPasswordThunk } from '../../store/userSlice'; // Import your thunks
 import { useNavigate } from 'react-router-dom';
 
 const ForgetPassword = () => {
-  const { fetchUser, forgetpassword } = useUser();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState('');
   const [step, setStep] = useState(0);
-  const navigate = useNavigate()
+  
+  const { status, error } = useSelector((state) => state.user);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     if (step === 0 && email) {
-      const response = await fetchUser(email);
-      if (response.code === "userExist") {
+      const action = await dispatch(fetchUser(email));
+      if (fetchUser.fulfilled.match(action) && action.payload.code === "userExist") {
         setStep(1);
+      } else {
+        // Handle error or invalid email
+        console.error("User does not exist or an error occurred");
       }
     }
-    if(step === 1 && password){
-      const response = await forgetpassword(email,password);
-      if(response.code === "forgetPwdSuccess"){
+
+    if (step === 1 && password) {
+      const action = await dispatch(forgetPasswordThunk({ email, password }));
+      if (forgetPasswordThunk.fulfilled.match(action) && action.payload.code === "forgetPwdSuccess") {
         navigate("/login");
+      } else {
+        // Handle error or invalid password
+        console.error("Password reset failed or an error occurred");
       }
     }
   };
@@ -30,18 +42,19 @@ const ForgetPassword = () => {
     <div className="forget-password-container">
       <h2>Forgot Password</h2>
       <form onSubmit={handleSubmit}>
-        {step === 0 && <>
-          <label>
-            Email:
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </label>
-        </>
-        }
+        {step === 0 && (
+          <>
+            <label>
+              Email:
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </label>
+          </>
+        )}
         {step === 1 && (
           <>
             <label>
@@ -55,7 +68,10 @@ const ForgetPassword = () => {
             </label>
           </>
         )}
-        <button type="submit">Submit</button>
+        <button type="submit" disabled={status === 'loading'}>
+          {status === 'loading' ? 'Processing...' : 'Submit'}
+        </button>
+        {error && <p className="error">{error}</p>}
       </form>
     </div>
   );

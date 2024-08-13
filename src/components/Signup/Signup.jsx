@@ -1,35 +1,47 @@
-import { Link, useNavigate } from "react-router-dom";
-import "./signup.css";
+import React, { useState } from 'react';
+import './signup.css';
 import SignUpImg from "../../images/signup.jpg";
-import { useState } from "react";
-import { useUser } from "../../Providers/userProvider";
+import { useDispatch, useSelector } from 'react-redux';
+import { registerUser } from '../../store/userSlice';
+import { useNavigate, Link } from 'react-router-dom';
 
 const Signup = () => {
-  const [userData, setUser] = useState({ firstName: "", lastName: "", email: "", phoneNumber: "", password: "" });
-  const { registerUser } = useUser();
-  const [error, setError] = useState("");
+  const [userData, setUser] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phoneNumber: "",
+    password: ""
+  });
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { error, status } = useSelector((state) => state.user); // Use Redux to get error and status
 
+  // Handle input changes
   const handleChange = (e) => {
     const { id, value } = e.target;
     setUser({ ...userData, [id]: value });
   }
 
+  // Handle form submission
   const submitUser = async (e) => {
     e.preventDefault();
     if (userData.firstName && userData.lastName && userData.email && userData.phoneNumber && userData.password) {
-      const response = await registerUser(userData);
-      if (response.code === "registered") {
-        navigate("/login")
-        setError("")
-        setUser({ firstName: "", lastName: "", email: "", phoneNumber: "", password: "" })
+      const action = await dispatch(registerUser(userData));
+      if (registerUser.fulfilled.match(action)) {
+        if (action.payload.code === "registered") {
+          navigate("/login");
+          setUser({
+            firstName: "",
+            lastName: "",
+            email: "",
+            phoneNumber: "",
+            password: ""
+          });
+        }
       }
-      if(response.code === "existUser") {
-        setError("User Already Exist.")
-      }
-    }
-    else {
-      setError("Please provide Valid Data");
+    } else {
+      // You can handle client-side validation errors here if needed
     }
   }
 
@@ -37,14 +49,14 @@ const Signup = () => {
     <div className="container">
       <img className="image" src={SignUpImg} alt="signup" />
       <div className="outbox">
-        <form>
+        <form onSubmit={submitUser}>
           <h1>Please fill the form to SignUp!!</h1>
           <div className="inputbox">
-            <input type="text" id="firstName" placeholder="FirstName" value={userData.firstName} onChange={handleChange} />
+            <input type="text" id="firstName" placeholder="First Name" value={userData.firstName} onChange={handleChange} />
             <i className="bx bxs-user"></i>
           </div>
           <div className="inputbox">
-            <input type="text" id="lastName" placeholder="LastName" value={userData.lastName} onChange={handleChange} />
+            <input type="text" id="lastName" placeholder="Last Name" value={userData.lastName} onChange={handleChange} />
             <i className="bx bxs-user"></i>
           </div>
           <div className="inputbox">
@@ -59,9 +71,9 @@ const Signup = () => {
             <input type="text" id="phoneNumber" placeholder="Phone Number" value={userData.phoneNumber} onChange={handleChange} />
             <i className="bx bxs-alt"></i>
           </div>
-          {error && <p>{error}</p>}
-          <button onClick={submitUser} className="btn">
-            SignIn
+          {error && <p>{error}</p>} {/* Display error from Redux */}
+          <button type="submit" className="btn" disabled={status === 'loading'}>
+            {status === 'loading' ? 'Signing Up...' : 'Sign Up'}
           </button>
 
           <div className="acc">
@@ -74,4 +86,5 @@ const Signup = () => {
     </div>
   );
 };
+
 export default Signup;

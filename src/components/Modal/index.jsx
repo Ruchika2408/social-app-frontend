@@ -1,17 +1,15 @@
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
+// StyledModal.js
+import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
-import { useUser } from '../../Providers/userProvider';
-import { Button, TextField } from '@mui/material';
-import { useSocialPost } from '../../Providers/socialPostProvider';
-import "./index.css"
-import { ToastContainer, toast } from 'react-toastify';
-  import 'react-toastify/dist/ReactToastify.css';
+import { Modal, Box, TextField, Button } from '@mui/material';
+import { toast } from 'react-toastify';
+import { createPost, setSocialPost } from '../../store/socialPostSlice';
+import 'react-toastify/dist/ReactToastify.css';
+import './index.css';
 
 const StyledModal = ({ open, handleClose }) => {
-    const {user} = useUser()
-    const {createPost, handleSocialPost}  = useSocialPost();
-
+    const dispatch = useDispatch();
+    const user = useSelector(state => state.user.user);
     const [post, setPost] = useState({
         email: user.email,
         title: "",
@@ -20,27 +18,24 @@ const StyledModal = ({ open, handleClose }) => {
         time: "",
         comments: [],
         likes: []
-    })
+    });
 
     const handleInputChange = (e) => {
-        const {id, value} = e.target;
-        setPost({...post, [id]: value})
-    }
+        const { id, value } = e.target;
+        setPost({ ...post, [id]: value });
+    };
 
-    const createSocialPost = async() => {
-        console.log()
-        handleSocialPost({...post, time: new Date()})
-        setPost({...post, time: new Date() })
-        const postData = {email:user.email, title: post.title}
-       const response = await createPost(postData);
-       handleClose();
-       if(response.code === "verificationEmailSent"){
-        toast("Admin will approve your post please wait for 2-3 working days.");
-       }
-    }
+    const handleCreatePost = async () => {
+        const postData = { ...post, time: new Date() };
+        const response = await dispatch(createPost(postData));
+        handleClose();
+        if (response.payload.code === "verificationEmailSent") {
+            toast("Admin will approve your post. Please wait for 2-3 working days.");
+        }
+    };
 
-    const cancelPost = () => {
-        handleClose()
+    const handleCancel = () => {
+        handleClose();
         setPost({
             email: user.email,
             title: "",
@@ -49,20 +44,10 @@ const StyledModal = ({ open, handleClose }) => {
             time: "",
             comments: [],
             likes: []
-        })
-        handleSocialPost({
-            email: user.email,
-            title: "",
-            description: "",
-            imgUryrl: "",
-            time: "",
-            comments: [],
-            likes: []
-        })
-    }
+        });
+    };
 
     return (
-        <>
         <Modal
             open={open}
             onClose={handleClose}
@@ -70,18 +55,16 @@ const StyledModal = ({ open, handleClose }) => {
             aria-describedby="modal-modal-description"
         >
             <Box className="boxContainer">
-            <TextField id="title" label="Title" variant="outlined" value={post.title} onChange={handleInputChange}/>
-            <TextField id="description" label="Description" variant="outlined" value={post.description} onChange={handleInputChange}/>
-            <TextField id="imgUrl" label="Image Url" variant="outlined" value={post.imgUrl} onChange={handleInputChange}/>
-            <div className="buttonsContainer" >
-                <Button variant="outlined" onClick={cancelPost}>Cancel</Button>
-                <Button variant="contained" onClick={createSocialPost}>Submit</Button>
-            </div>
+                <TextField id="title" label="Title" variant="outlined" value={post.title} onChange={handleInputChange} />
+                <TextField id="description" label="Description" variant="outlined" value={post.description} onChange={handleInputChange} />
+                <TextField id="imgUrl" label="Image Url" variant="outlined" value={post.imgUrl} onChange={handleInputChange} />
+                <div className="buttonsContainer">
+                    <Button variant="outlined" onClick={handleCancel}>Cancel</Button>
+                    <Button variant="contained" onClick={handleCreatePost}>Submit</Button>
+                </div>
             </Box>
         </Modal>
-        <ToastContainer />
-        </>
-    )
-}
+    );
+};
 
 export default StyledModal;

@@ -5,6 +5,7 @@ import logout from '../services/logout';
 import signup from '../services/signup';
 import forgetPassword from '../services/forgetPassword';
 
+// Thunks
 export const authenticate = createAsyncThunk(
   'user/authenticate',
   async ({ email, password }, { rejectWithValue }) => {
@@ -45,17 +46,45 @@ export const signout = createAsyncThunk(
 );
 
 export const registerUser = createAsyncThunk(
-  'user/registerUser',
-  async (userData, { rejectWithValue }) => {
-    try {
-      const response = await signup(userData);
-      return response;
-    } catch (error) {
-      return rejectWithValue(error.message);
+    'user/registerUser',
+    async (userData, { rejectWithValue }) => {
+      try {
+        const response = await signup(userData);
+        return response;
+      } catch (error) {
+        return rejectWithValue(error.message);
+      }
     }
-  }
-);
+  );
 
+  export const fetchUser = createAsyncThunk(
+    'user/fetchUser',
+    async (email, { rejectWithValue }) => {
+      try {
+        // Your API call here
+        const response = await findUser(email); // Ensure findUser is correctly implemented
+        return response;
+      } catch (error) {
+        return rejectWithValue(error.message);
+      }
+    }
+  );
+  
+  export const forgetPasswordThunk = createAsyncThunk(
+    'user/forgetPassword',
+    async ({ email, password }, { rejectWithValue }) => {
+      try {
+        // Your API call here
+        const response = await forgetPassword(email, password);
+        return response;
+      } catch (error) {
+        return rejectWithValue(error.message);
+      }
+    }
+  );
+  
+
+// User Slice
 const userSlice = createSlice({
   name: 'user',
   initialState: {
@@ -91,17 +120,13 @@ const userSlice = createSlice({
       })
       .addCase(signout.rejected, (state, action) => {
         state.error = action.payload;
-      })
-      .addCase(registerUser.fulfilled, (state, action) => {
-        // Handle user registration
-        state.error = null;
-      })
-      .addCase(registerUser.rejected, (state, action) => {
-        state.error = action.payload;
       });
   },
 });
 
 export const { setUserData, clearUserData } = userSlice.actions;
+
+// Selector
+export const selectUser = (state) => state.user.user;
 
 export default userSlice.reducer;

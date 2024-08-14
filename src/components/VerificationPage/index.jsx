@@ -7,14 +7,17 @@ import verifySocialPost from '../../services/verifyPost';
 const VerificationPage = () => {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
-    console.log(queryParams)
     const currentPost = queryParams.toString().split("&");
 
+    const email = queryParams.get('email');
+    const title = queryParams.get('title');
+    const description = queryParams.get('description');
+    const img = queryParams.get('img');
     const post = {
-        title: decodeURIComponent(currentPost[1]).toString().split("=")[1],
-        email: decodeURIComponent(currentPost[0]).toString().split("=")[1],
-        description: decodeURIComponent(currentPost[2]).toString().split("=")[1],
-        imgUrl: decodeURIComponent(currentPost[3]).toString().split("=")[1],
+        title: decodeURIComponent(title),
+        email: decodeURIComponent(email),
+        description: decodeURIComponent(description),
+        imgUrl: decodeURIComponent(img),
         time: new Date(),
         comments: [],
         likes: []

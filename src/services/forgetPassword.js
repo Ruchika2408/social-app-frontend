@@ -8,7 +8,7 @@ const forgetPassword = async (email, newPassword) => {
             "forgetPassword"
         ).toString();
 
-        const response = await axios.post("http://localhost:3001/api/auth/forgetpassword", { email, newPassword: ciphertext }).then((response) => response.data);
+        const response = await axios.post("https://social-app-backend-my0w.onrender.com/api/auth/forgetpassword", { email, newPassword: ciphertext }).then((response) => response.data);
         console.log(response);
         return response;
     }

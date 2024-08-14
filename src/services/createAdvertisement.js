@@ -2,7 +2,7 @@ import axios from "axios";
 
 const createAdvertisement = async (advertisement) => {
     try {
-        const response = await axios.post("http://localhost:3001/api/advertisement/createAdvertisement", advertisement).then((response) => response.data);
+        const response = await axios.post("https://social-app-backend-my0w.onrender.com/api/advertisement/createAdvertisement", advertisement).then((response) => response.data);
         return response;
     }
     catch (error) {

@@ -2,7 +2,7 @@ import axios from "axios";
 
 const getAdvertisements = async () => {
     try {
-        const response = await axios.get(`http://localhost:3001/api/advertisement`).then((response) => response.data);
+        const response = await axios.get(`https://social-app-backend-my0w.onrender.com/api/advertisement`).then((response) => response.data);
         return response;
     }
     catch (error) {

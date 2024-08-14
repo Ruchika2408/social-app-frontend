@@ -6,7 +6,7 @@ const signup = async (userData) => {
         const encryptedPwd = CryptoJs.AES.encrypt(userData.password, "register").toString();
 
         const userDetails = { ...userData, password: encryptedPwd };
-        const response = await axios.post("http://localhost:3001/api/auth/register", userDetails).then((response) => response.data);
+        const response = await axios.post("https://social-app-backend-my0w.onrender.com/api/auth/register", userDetails).then((response) => response.data);
         return response;
     }
     catch (error) {

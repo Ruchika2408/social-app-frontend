@@ -7,8 +7,7 @@ import verifySocialPost from '../../services/verifyPost';
 const VerificationPage = () => {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
-    const currentPost = queryParams.toString().split("&");
-
+   
     const email = queryParams.get('email');
     const title = queryParams.get('title');
     const description = queryParams.get('description');

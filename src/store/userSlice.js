@@ -90,7 +90,6 @@ const userSlice = createSlice({
   initialState: {
     user: {},
     isLoggedIn: false,
-    error: null,
   },
   reducers: {
     setUserData: (state, action) => {
@@ -107,7 +106,6 @@ const userSlice = createSlice({
       .addCase(authenticate.fulfilled, (state, action) => {
         state.user = action.payload;
         state.isLoggedIn = true;
-        state.error = null;
       })
       .addCase(authenticate.rejected, (state, action) => {
         state.error = action.payload;

@@ -1,18 +1,30 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Logo from "../../images/logo.jpg";
 import HeaderBg from "../../images/background.jpg";
-import { clearUserData, signout } from "../../store/userSlice";
+import { clearUserData} from "../../store/userSlice";
 import "./index.css";
+import logout from "../../services/logout";
 
 const StyledHeader = ({ name }) => {
   const dispatch = useDispatch();
-  const {isLoggedIn, email} = useSelector((state) => state.user);
+  const navigate = useNavigate();
+  const {isLoggedIn, user} = useSelector((state) => state.user);
 
   const handleLogout = async() => {
-    await signout(email);
-    dispatch(clearUserData())
+    if (isLoggedIn && user.email) {
+      try {
+        const response = await logout(user.email);
+        if (response.code === 'logout') {
+          navigate('/login');
+          localStorage.removeItem("id")
+          dispatch(clearUserData())
+        }
+      } catch (error) {
+        console.error('Logout failed', error);
+      }
+    }
   };
 
   return (

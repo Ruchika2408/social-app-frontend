@@ -1,0 +1,15 @@
+.addContainer {
+    width: 100%;
+    margin: 15px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.advertisementModalContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: 15px 0;
+}

@@ -11,7 +11,7 @@ export const fetchSocialPosts = createAsyncThunk(
     try {
       const response = await getSocialPosts();
       if (response.code === 'socialPostsExist') {
-        return response.socialPosts;
+        return response.socialPosts.posts;
       } else {
         throw new Error('Failed to fetch posts');
       }
@@ -72,48 +72,31 @@ export const verifyPost = createAsyncThunk(
 const socialPostSlice = createSlice({
   name: 'socialPost',
   initialState: {
-    socialPosts: [],
-    error: null,
+    posts: [],
+    currentPost: {
+      email: '',
+      title: "",
+      description: "",
+      imgUrl: "",
+      time: "",
+      comments: [],
+      likes: []
+    },
   },
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchSocialPosts.fulfilled, (state, action) => {
-        state.socialPosts = action.payload;
-        state.error = null;
-      })
-      .addCase(fetchSocialPosts.rejected, (state, action) => {
-        state.error = action.payload;
-      })
-      .addCase(createPost.fulfilled, (state, action) => {
-        // Handle post creation
-        state.error = null;
-      })
-      .addCase(createPost.rejected, (state, action) => {
-        state.error = action.payload;
-      })
-      .addCase(commentPosts.fulfilled, (state, action) => {
-        // Handle commenting on posts
-        state.error = null;
-      })
-      .addCase(commentPosts.rejected, (state, action) => {
-        state.error = action.payload;
-      })
-      .addCase(likePosts.fulfilled, (state, action) => {
-        // Handle liking posts
-        state.error = null;
-      })
-      .addCase(likePosts.rejected, (state, action) => {
-        state.error = action.payload;
-      })
-      .addCase(verifyPost.fulfilled, (state, action) => {
-        // Handle post verification
-        state.error = null;
-      })
-      .addCase(verifyPost.rejected, (state, action) => {
-        state.error = action.payload;
-      });
+  reducers: {
+    setSocialPosts: (state, action) => {
+      state.posts = action.payload
+    },
+    setCurrentPost: (state,action) => {
+      console.log(action.payload)
+      state.currentPost= action.payload
+    },
+    clearCurrentPost: (state) => {
+      state.currentPost = {}
+    }
   },
 });
+
+export const {setCurrentPost, setSocialPosts, clearCurrentPost} = socialPostSlice.actions;
 
 export default socialPostSlice.reducer;

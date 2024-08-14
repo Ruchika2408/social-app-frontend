@@ -1,9 +1,11 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { authenticate } from '../../store/userSlice';
-import { useNavigate } from 'react-router-dom';
+import {  useDispatch } from 'react-redux';
+import { setUserData } from '../../store/userSlice';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import LoginImg from '../../images/login.jpg';
 import './login.css';
+import login from '../../services/login';
+import findUser from '../../services/getUser';
 
 const Login = () => {
   const [currentEmail, setCurrentEmail] = useState('');
@@ -12,21 +14,25 @@ const Login = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector((state) => state.user.user);
-  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
-
+  
   const submitLogin = async (e) => {
     e.preventDefault();
     if (currentEmail && currentPassword) {
-      const loginResponse = await dispatch(authenticate({ email: currentEmail, password: currentPassword }));
-      console.log(loginResponse);
+      const loginResponse = await login(currentEmail, currentPassword);
 
-      if (loginResponse.payload && isLoggedIn) {
+      if (loginResponse.code === "loggedIn") {
+        localStorage.setItem('id', currentEmail);
+        const userData = await findUser(currentEmail);
+        if (userData.code === 'userExist') {
+          dispatch(setUserData(userData.user));
+        } else {
+          throw new Error('User not found');
+        }
         navigate('/');
         setError('');
-      } else if (loginResponse.payload.code === 'incorrectPassword') {
+      } else if (loginResponse.code === 'incorrectPassword') {
         setError('Please provide a valid password.');
-      } else if (loginResponse.payload.code === 'userNotFound') {
+      } else if (loginResponse.code === 'userNotFound') {
         setError('User not found.');
       } else {
         setError('User already logged in.');
@@ -46,7 +52,7 @@ const Login = () => {
   };
 
   return (
-    <div className="container">
+    <div className="loginContainer">
       <img className="image" src={LoginImg} alt="login-bg" />
       <div className="outbox">
         <form>

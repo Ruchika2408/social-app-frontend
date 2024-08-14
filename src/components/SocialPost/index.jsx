@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
+import {  useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -17,12 +17,11 @@ import styled from '@emotion/styled';
 import Collapse from '@mui/material/Collapse';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {
-  likePosts,
-  commentPosts,
-} from '../../store/socialPostSlice';
-import { selectUser } from '../../store/userSlice';
 import './index.css';
+import commentPost from '../../services/commentPost';
+import likePost from '../../services/likePost';
+import { setSocialPosts } from '../../store/socialPostSlice';
+import getSocialPosts from '../../services/socialPosts';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -34,13 +33,9 @@ const ExpandMore = styled((props) => {
 
 const SocialPost = ({ title, description, img, time, email, likes = [], comments = [] }) => {
   const [expanded, setExpanded] = useState(false);
-  const [like, setLike] = useState(false);
   const [comment, setComment] = useState("");
-
-  const dispatch = useDispatch();
-  const user = useSelector(selectUser);
-  const isLoggedIn = !!user.email;
-
+  const dispatch = useDispatch()
+  const {user, isLoggedIn} = useSelector(state => state.user);
   const liked = likes.some(item => item.likeBy === user.email);
   const [likedState, setLikedState] = useState(liked);
 
@@ -50,19 +45,27 @@ const SocialPost = ({ title, description, img, time, email, likes = [], comments
 
   const onComment = async () => {
     if (comment) {
-      const resp = await dispatch(commentPosts({ email, title, comment, commentBy: user.email }));
-      if (resp.meta.requestStatus === 'fulfilled') {
+      const resp = await commentPost( email, title, comment, user.email );
+      if (resp.code === "socialPostCommented") {
         toast("Comment successfully added");
-        setComment(""); // Clear the comment input after successful comment
+        setComment("");
+        const response = await getSocialPosts();
+        if (response.code === "socialPostsExist") {
+          dispatch(setSocialPosts(response.socialPosts));
+        }
       }
     }
   };
 
   const onLike = async () => {
-    const response = await dispatch(likePosts({ email, title, like: !likedState, likeBy: user.email }));
-    if (response.meta.requestStatus === 'fulfilled') {
+    const response = await likePost(email, title, !likedState, user.email);
+    if (response.code === "socialPostLiked") {
       setLikedState(!likedState);
       toast(likedState ? "Like removed." : "Post liked.");
+      const response = await getSocialPosts();
+      if (response.code === "socialPostsExist") {
+        dispatch(setSocialPosts(response.socialPosts));
+      }
     }
   };
 
@@ -121,7 +124,7 @@ const SocialPost = ({ title, description, img, time, email, likes = [], comments
           {comments.map((item) => (
             <div style={{ display: "flex", gap: "12px", alignItems: "center" }} key={item.commentBy + item.comment}>
               <Avatar sx={{ bgcolor: red[400], width: 24, height: 24 }} aria-label="commenter">
-                {item.commentBy.charAt(0).toUpperCase()}
+                {item?.commentBy?.toString().charAt(0)}
               </Avatar>
               <Typography sx={{ margin: 0 }} paragraph>
                 {item.comment}

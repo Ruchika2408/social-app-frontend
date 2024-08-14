@@ -1,15 +1,4 @@
-body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-.container {
+.verificationContainer {
     width: 90%;
     max-width: 500px;
     text-align: center;
@@ -41,7 +30,7 @@ body {
 }
 
 @media (max-width: 768px) {
-    .container {
+    .verificationContainer {
         padding: 20px;
     }
 

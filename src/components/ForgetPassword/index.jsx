@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import './index.css'; // Import your CSS file for styling
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchUser, forgetPasswordThunk } from '../../store/userSlice'; // Import your thunks
+import {  useSelector } from 'react-redux';// Import your thunks
 import { useNavigate } from 'react-router-dom';
+import findUser from '../../services/getUser';
+import forgetPassword from '../../services/forgetPassword';
 
 const ForgetPassword = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   
   const [email, setEmail] = useState('');
@@ -18,21 +18,19 @@ const ForgetPassword = () => {
     event.preventDefault();
 
     if (step === 0 && email) {
-      const action = await dispatch(fetchUser(email));
-      if (fetchUser.fulfilled.match(action) && action.payload.code === "userExist") {
+      const response = await findUser(email);
+      if (response.code === "userExist") {
         setStep(1);
       } else {
-        // Handle error or invalid email
         console.error("User does not exist or an error occurred");
       }
     }
 
     if (step === 1 && password) {
-      const action = await dispatch(forgetPasswordThunk({ email, password }));
-      if (forgetPasswordThunk.fulfilled.match(action) && action.payload.code === "forgetPwdSuccess") {
+      const response = await forgetPassword( email, password);
+      if (response.code === "forgetPwdSuccess") {
         navigate("/login");
       } else {
-        // Handle error or invalid password
         console.error("Password reset failed or an error occurred");
       }
     }

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import './signup.css';
 import SignUpImg from "../../images/signup.jpg";
-import { useDispatch, useSelector } from 'react-redux';
-import { registerUser } from '../../store/userSlice';
+import {useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
+import signup from '../../services/signup';
 
 const Signup = () => {
   const [userData, setUser] = useState({
@@ -13,9 +13,9 @@ const Signup = () => {
     phoneNumber: "",
     password: ""
   });
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { error, status } = useSelector((state) => state.user); // Use Redux to get error and status
+  const [error,setError] = useState()
+  const { status } = useSelector((state) => state.user); // Use Redux to get error and status
 
   // Handle input changes
   const handleChange = (e) => {
@@ -23,13 +23,11 @@ const Signup = () => {
     setUser({ ...userData, [id]: value });
   }
 
-  // Handle form submission
   const submitUser = async (e) => {
     e.preventDefault();
     if (userData.firstName && userData.lastName && userData.email && userData.phoneNumber && userData.password) {
-      const action = await dispatch(registerUser(userData));
-      if (registerUser.fulfilled.match(action)) {
-        if (action.payload.code === "registered") {
+      const response = await signup(userData);
+      if (response.code === "registered") {
           navigate("/login");
           setUser({
             firstName: "",
@@ -39,14 +37,19 @@ const Signup = () => {
             password: ""
           });
         }
-      }
+        if(response.code === "existUser"){
+          setError("User already Exist")
+        }
+        if(response.code === "error"){
+          setError("Internal Error")
+        }
     } else {
-      // You can handle client-side validation errors here if needed
+      setError("Please Provide valid details.")
     }
   }
 
   return (
-    <div className="container">
+    <div className="signupContainer">
       <img className="image" src={SignUpImg} alt="signup" />
       <div className="outbox">
         <form onSubmit={submitUser}>

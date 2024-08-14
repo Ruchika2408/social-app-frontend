@@ -9,36 +9,20 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
+import "./index.css"
+import { setAdvertisements } from '../../store/advertisementSlice';
+import getAdvertisements from '../../services/getAdvertisements';
+import { useDispatch } from 'react-redux';
+import AdvertisementModal from '../AdvertisementModal';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
-
-const images = [
-  {
-    label: 'San Francisco – Oakland Bay Bridge, United States',
-    imgPath:
-      'https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60',
-  },
-  {
-    label: 'Bird',
-    imgPath:
-      'https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60',
-  },
-  {
-    label: 'Bali, Indonesia',
-    imgPath:
-      'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250',
-  },
-  {
-    label: 'Goč, Serbia',
-    imgPath:
-      'https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60',
-  },
-];
 
 function SwipeableTextMobileStepper() {
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
-  const maxSteps = images.length;
+  const [data,setData] = React.useState([])
+  let maxSteps = data.length;
+  const dispatch = useDispatch()
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -51,9 +35,29 @@ function SwipeableTextMobileStepper() {
   const handleStepChange = (step) => {
     setActiveStep(step);
   };
+  const fetch = async() => {
+    const advertisements = await getAdvertisements();
+    if(advertisements.code === "advertisementsExist"){
+      dispatch(setAdvertisements(advertisements?.advertisements))
+      setData(advertisements?.advertisements)
+      maxSteps = advertisements?.advertisements?.length;
+    }
+  }
+  React.useEffect(() => {
+  fetch()
+  }, [])
+
+  const [openModal,setModal] = React.useState(false);
+
+  const handleClose = () => {
+    setModal(false);
+  };
+
 
   return (
-    <Box sx={{ maxWidth: 400, flexGrow: 1 }}>
+    <>
+    <div className='addContainer'>
+    <Box sx={{ maxWidth: 400, flexGrow: 1}}>
       <Paper
         square
         elevation={0}
@@ -65,7 +69,7 @@ function SwipeableTextMobileStepper() {
           bgcolor: 'background.default',
         }}
       >
-        <Typography>{images[activeStep].label}</Typography>
+        <Typography>{data ? data[activeStep]?.title : ""}</Typography>
       </Paper>
       <AutoPlaySwipeableViews
         axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
@@ -73,8 +77,8 @@ function SwipeableTextMobileStepper() {
         onChangeIndex={handleStepChange}
         enableMouseEvents
       >
-        {images.map((step, index) => (
-          <div key={step.label}>
+        {data && data.map((step, index) => (
+          <div key={step.title}>
             {Math.abs(activeStep - index) <= 2 ? (
               <Box
                 component="img"
@@ -85,8 +89,8 @@ function SwipeableTextMobileStepper() {
                   overflow: 'hidden',
                   width: '100%',
                 }}
-                src={step.imgPath}
-                alt={step.label}
+                src={step.imgUrl}
+                alt={step.title}
               />
             ) : null}
           </div>
@@ -122,6 +126,12 @@ function SwipeableTextMobileStepper() {
         }
       />
     </Box>
+    </div>
+    <div className='advertisementModalContainer'>
+    <Button variant="contained" onClick={() => setModal(true)}>Create Advertisement</Button>
+    <AdvertisementModal open={openModal} fetchData={fetch} handleClose={handleClose} />
+    </div>
+    </>
   );
 }
 

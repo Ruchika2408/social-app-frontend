@@ -27,7 +27,7 @@ const routes = [
     element: <Contact />
   },
   {
-    path: "/verify/:email",
+    path: "/verify",
     element: <VerificationPage />
   }
 ];

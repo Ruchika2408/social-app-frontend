@@ -3,33 +3,29 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { Modal, Box, TextField, Button } from '@mui/material';
 import { toast } from 'react-toastify';
-import { createPost, setSocialPost } from '../../store/socialPostSlice';
+import {  setCurrentPost } from '../../store/socialPostSlice';
 import 'react-toastify/dist/ReactToastify.css';
 import './index.css';
+import createSocialPost from '../../services/createPost';
 
 const StyledModal = ({ open, handleClose }) => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.user.user);
-    const [post, setPost] = useState({
-        email: user.email,
-        title: "",
-        description: "",
-        imgUrl: "",
-        time: "",
-        comments: [],
-        likes: []
-    });
+    const currentPost = useSelector(state => state.socialPosts.currentPost)
+    const [post, setPost] = useState({...currentPost, email: user.email});
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         setPost({ ...post, [id]: value });
+        dispatch(setCurrentPost({...post, [id]: value}))
     };
 
     const handleCreatePost = async () => {
-        const postData = { ...post, time: new Date() };
-        const response = await dispatch(createPost(postData));
+        const postData = { ...post, time: new Date(), email: user.email };
+        dispatch(setCurrentPost(postData))
+        const response = await createSocialPost(postData);
         handleClose();
-        if (response.payload.code === "verificationEmailSent") {
+        if (response.code === "verificationEmailSent") {
             toast("Admin will approve your post. Please wait for 2-3 working days.");
         }
     };

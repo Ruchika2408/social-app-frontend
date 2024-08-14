@@ -1,25 +1,36 @@
 // VerificationPage.js
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { verifyPost } from '../../store/socialPostSlice';
+import { Link, useLocation } from 'react-router-dom';
 import './VerificationPage.css';
+import verifySocialPost from '../../services/verifyPost';
 
 const VerificationPage = () => {
-    const dispatch = useDispatch();
-    const currentPost = useSelector(state => state.socialPosts.currentPost);
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    console.log(queryParams)
+    const currentPost = queryParams.toString().split("&");
+
+    const post = {
+        title: decodeURIComponent(currentPost[1]).toString().split("=")[1],
+        email: decodeURIComponent(currentPost[0]).toString().split("=")[1],
+        description: decodeURIComponent(currentPost[2]).toString().split("=")[1],
+        imgUrl: decodeURIComponent(currentPost[3]).toString().split("=")[1],
+        time: new Date(),
+        comments: [],
+        likes: []
+    }
 
     useEffect(() => {
         const checkPost = async () => {
-            if (currentPost) {
-                await dispatch(verifyPost(currentPost));
+            if(post) {
+                await verifySocialPost(post);
             }
         };
         checkPost();
-    }, [dispatch, currentPost]);
+    }, []);
 
     return (
-        <div className="container">
+        <div className="verificationContainer">
             <div className="success-box">
                 <h1>Post Added Successfully!</h1>
                 <p>Your social post has been added.</p>

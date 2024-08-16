@@ -13,7 +13,7 @@ const StyledHeader = ({ name }) => {
   const {isLoggedIn, user} = useSelector((state) => state.user);
 
   const handleLogout = async() => {
-    if (isLoggedIn && user.email) {
+    if (user.email) {
       try {
         const response = await logout(user.email);
         if (response.code === 'logout') {

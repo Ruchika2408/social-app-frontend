@@ -33,3 +33,7 @@ code {
 .MuiCardHeader-title {
   text-align: left;
 }
+
+.MuiCardMedia-root{
+  min-height: 400px;
+}

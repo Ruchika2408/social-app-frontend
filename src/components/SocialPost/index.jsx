@@ -44,7 +44,7 @@ const SocialPost = ({ title, description, img, time, email, likes = [], comments
   };
 
   const onComment = async () => {
-    if (comment) {
+    if (comment && user.email) {
       const resp = await commentPost( email, title, comment, user.email );
       if (resp.code === "socialPostCommented") {
         toast("Comment successfully added");
@@ -58,6 +58,7 @@ const SocialPost = ({ title, description, img, time, email, likes = [], comments
   };
 
   const onLike = async () => {
+    if(user.email){
     const response = await likePost(email, title, !likedState, user.email);
     if (response.code === "socialPostLiked") {
       setLikedState(!likedState);
@@ -67,6 +68,7 @@ const SocialPost = ({ title, description, img, time, email, likes = [], comments
         dispatch(setSocialPosts(response.socialPosts));
       }
     }
+  }
   };
 
   return (

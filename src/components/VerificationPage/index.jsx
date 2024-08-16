@@ -1,31 +1,40 @@
 // VerificationPage.js
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './VerificationPage.css';
 import verifySocialPost from '../../services/verifyPost';
 
 const VerificationPage = () => {
     const location = useLocation();
-    const queryParams = new URLSearchParams(location.search);
+    const [post, setPost] = useState(null);
 
-    const post = {
-        title: queryParams.get('title'),
-        email: queryParams.get("email"),
-        description: queryParams.get("description"),
-        imgUrl: queryParams.get('img'),
-        time: new Date(),
-        comments: [],
-        likes: []
-    }
-    
     useEffect(() => {
-        const checkPost = async () => {
-            if(post) {
-                await verifySocialPost(post);
-            }
+        const queryParams = new URLSearchParams(location.search);
+
+        const postDetails = {
+            title: queryParams.get('title'),
+            email: queryParams.get('email'),
+            description: queryParams.get('description'),
+            imgUrl: queryParams.get('img'),
+            time: new Date(),
+            comments: [],
+            likes: []
         };
-        checkPost();
-    }, []);
+
+        setPost(postDetails);
+    }, [location.search]);
+
+    const checkPost = useCallback(async () => {
+        if (post) {
+            await verifySocialPost(post);
+        }
+    }, [post]);
+
+    useEffect(() => {
+        if (post) {
+            checkPost();
+        }
+    }, [checkPost, post]);
 
     return (
         <div className="verificationContainer">

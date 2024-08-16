@@ -24,12 +24,12 @@ const Footer = () => {
                         <b>Contact Us:</b>
                     </h4>
                     <p>
-                        Email:{" "}
-                        <a href="mailto:actacs202303005@indusinstitute.edu.au">
-                            ACTACS202303005@indusinstitute.edu.au
+                        Email: {" "}
+                        <a href="mailto:zalakkorat@gmail.com" className="emailLink">
+                            zalakkorat@gmail.com
                         </a>
                     </p>
-                    <p>Phone: +61 451-392-990 </p>
+                    <p>Phone: +61478473757</p>
                 </div>
             </div>
             <div className="footer3">

@@ -57,7 +57,7 @@ function SwipeableTextMobileStepper() {
   return (
     <>
     <div className='addContainer'>
-    <Box sx={{ maxWidth: 400, flexGrow: 1}}>
+    <Box sx={{ maxWidth: 500, flexGrow: 1, minHeight: "450px"}}>
       <Paper
         square
         elevation={0}
@@ -83,9 +83,9 @@ function SwipeableTextMobileStepper() {
               <Box
                 component="img"
                 sx={{
-                  height: 255,
+                  height: 335,
                   display: 'block',
-                  maxWidth: 400,
+                  maxWidth: '100%',
                   overflow: 'hidden',
                   width: '100%',
                 }}

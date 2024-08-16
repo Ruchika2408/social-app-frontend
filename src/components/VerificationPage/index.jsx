@@ -7,21 +7,17 @@ import verifySocialPost from '../../services/verifyPost';
 const VerificationPage = () => {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
-   
-    const email = queryParams.get('email');
-    const title = queryParams.get('title');
-    const description = queryParams.get('description');
-    const img = queryParams.get('img');
+
     const post = {
-        title: decodeURIComponent(title),
-        email: decodeURIComponent(email),
-        description: decodeURIComponent(description),
-        imgUrl: decodeURIComponent(img),
+        title: queryParams.get('title'),
+        email: queryParams.get("email"),
+        description: queryParams.get("description"),
+        imgUrl: queryParams.get('img'),
         time: new Date(),
         comments: [],
         likes: []
     }
-
+    
     useEffect(() => {
         const checkPost = async () => {
             if(post) {

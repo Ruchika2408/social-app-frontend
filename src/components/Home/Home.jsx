@@ -43,7 +43,7 @@ const Home = () => {
 
   return (
     <>
-      <StyledHeader name={user.firstName ? `${user?.firstName} ${user?.lastName}` :""} />
+      <StyledHeader name={user?.firstName ? `${user?.firstName} ${user?.lastName}` :""} />
       <div className="header2">
         <p>
           The ability to take the perspective of and empathize with others,

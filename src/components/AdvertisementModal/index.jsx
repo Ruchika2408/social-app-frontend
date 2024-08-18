@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Modal, Box, TextField, Button } from "@mui/material";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "./index.css";
 import { setCurrentAdvertisement } from "../../store/advertisementSlice";
 import createAdvertisement from "../../services/createAdvertisement";
 

@@ -25,7 +25,7 @@ const Signup = () => {
 
   const submitUser = async (e) => {
     e.preventDefault();
-    if (userData.firstName && userData.lastName && userData.email && userData.phoneNumber && userData.password) {
+    if (userData?.firstName && userData?.lastName && userData?.email && userData?.phoneNumber && userData?.password) {
       const response = await signup(userData);
       if (response.code === "registered") {
           navigate("/login");

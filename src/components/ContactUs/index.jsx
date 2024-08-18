@@ -5,7 +5,7 @@ import Footer from "../Footer";
 const Contact = () => {
   return (
     <>
-      <div className="heading">
+      <div className="contactHeading">
         <header>
           <nav>
             <ul className="menubar">
